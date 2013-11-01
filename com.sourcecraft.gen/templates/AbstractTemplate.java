@@ -7,10 +7,10 @@ import planner.AbstractPlanner;
 
 public abstract class AbstractTemplate {
 
-	private AbstractParser parser;
-	private AbstractMetrics metrics;
-	private AbstractDesigner designer;
-	private AbstractPlanner planner;
+	protected AbstractParser parser;
+	protected AbstractMetrics metrics;
+	protected AbstractDesigner designer;
+	protected AbstractPlanner planner;
 
 	public AbstractTemplate()
 	{

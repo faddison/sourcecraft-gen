@@ -1,6 +1,6 @@
 package runner;
 
-public class Main {
+public class MainRunner {
 
 	/**
 	 * This should run everything

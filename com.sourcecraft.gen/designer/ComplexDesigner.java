@@ -3,10 +3,9 @@ package designer;
 import java.util.List;
 
 import core.BlockEntry;
-
 import metrics.SimpleClassMetrics;
 
-public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
+public class ComplexDesigner extends AbstractDesigner<SimpleClassMetrics> 
 {
 
 	@Override

@@ -1,18 +1,22 @@
 package templates;
 
-import designer.SimpleDesigner;
-import metrics.SimpleClassMetrics;
-import parser.SimpleClassParser;
-import planner.SimpleGridPlanner;
+import designer.DesignerFactory;
+import designer.DesignerType;
+import planner.PlannerFactory;
+import planner.PlannerType;
 
 public class SimpleTemplate extends AbstractTemplate {
 	
 	public SimpleTemplate()
 	{
 		super();
-		parser = new SimpleClassParser();
-		planner = new SimpleGridPlanner();
-		metrics = new SimpleClassMetrics();
-		designer = new SimpleDesigner();
+		planner = PlannerFactory.create(PlannerType.SIMPLEGRIDPLANNER);
+		designer = DesignerFactory.create(DesignerType.SIMPLEDESIGNER);
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -7,17 +7,9 @@ import planner.AbstractPlanner;
 
 public abstract class AbstractTemplate {
 
-	protected AbstractParser parser;
-	protected AbstractMetrics metrics;
 	protected AbstractDesigner designer;
 	protected AbstractPlanner planner;
-
-	public AbstractTemplate()
-	{
-	}
+	protected AbstractMetrics metrics;
 	
-	public void run()
-	{
-		//planner.plan(designer.design(parser.parse(metrics)));
-	}
+	public abstract void run();
 }

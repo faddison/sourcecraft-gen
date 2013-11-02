@@ -7,7 +7,7 @@ import planner.AbstractPlanner;
 
 public abstract class AbstractTemplate {
 
-	protected AbstractDesigner designer;
+	protected AbstractDesigner<?> designer;
 	protected AbstractPlanner planner;
 	protected AbstractMetrics metrics;
 	

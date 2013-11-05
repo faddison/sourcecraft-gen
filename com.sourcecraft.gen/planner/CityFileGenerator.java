@@ -9,27 +9,33 @@ import java.lang.Math;
 import parser.Parser;
 import metrics.ClassProperties;
 
-public class CityFileGenerator {
+public class CityFileGenerator 
+{
 
 	private static int total_blocks = 0;
 	private static boolean scale = false;
-	
-	/**
-	 * @param args
-	 * @throws UnsupportedEncodingException 
-	 * @throws FileNotFoundException 
-	 */
-	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException 
+
+	public String generate(ArrayList<ClassProperties> classes, String filename)
 	{
-		PrintWriter writer = new PrintWriter("box.txt", "UTF-8");
-		ArrayList<ClassProperties> classes = Parser.parse();
-		//Parser p = new Parser();
-		//p.parse(classes);
-		//p.showData(classes);
-		generateGrid(classes, writer);
-		//generateBox(25, writer);
-		writer.close();
-		System.out.println(String.format("lines : %d", total_blocks));
+		PrintWriter writer;
+		try 
+		{
+			writer = new PrintWriter(filename, "UTF-8");
+			//Parser p = new Parser();
+			//p.parse(classes);
+			//p.showData(classes);
+			generateGrid(classes, writer);
+			//generateBox(25, writer);
+			writer.close();
+			System.out.println(String.format("lines : %d", total_blocks));
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return filename;
+		
 	}
 	public static int findLargestItem(ArrayList<ClassProperties> classList){
 		int length = classList.size();

@@ -1,5 +1,9 @@
 package runner;
 
+import mapper.CityMapGenerator;
+import parser.Parser;
+import planner.CityFileGenerator;
+
 public class MainRunner {
 
 	/**
@@ -8,13 +12,14 @@ public class MainRunner {
 	 */
 	public static void main(String[] args) 
 	{
-		// TODO Auto-generated method stub
+		Parser parser = new Parser();
+		CityFileGenerator cityGen = new CityFileGenerator();
+		CityMapGenerator mapGen = new CityMapGenerator();
 		
-		// make a parser and run it\
-		// make a planner and run it
-		// make a decorator and run it
-		// etc...
-
+		mapGen.map(
+			cityGen.generate(
+				parser.parse("sources/SweetHomeStructure.xml"), "cities/box.txt"), "maps/map.txt" );
+			
 	}
 
 }

@@ -12,14 +12,9 @@ import java.util.ArrayList;
 
 public class CityMapGenerator {
 
-	public static void main(String[] args) 
+	public void map(String inputfile, String outputfile) 
 	{
-		// TODO Auto-generated method stub
-		String filename = "box.txt";
-		String outputfile = "map.txt";
-		
-		writeCity(readCity(filename), outputfile);
-		
+		writeCity(readCity(inputfile), outputfile);	
 	}
 	
 	public static ArrayList<Point> readCity(String filename)

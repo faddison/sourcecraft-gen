@@ -26,7 +26,7 @@ public class Parser extends DefaultHandler {
 //	HashMap<String,Integer> m = new HashMap<String,Integer>();
 //	HashMap<String,Integer> a = new HashMap<String,Integer>();
 			
-	public static ArrayList<ClassProperties> parse() 
+	public static ArrayList<ClassProperties> parse(String filename) 
 	{
 
 		try {
@@ -80,7 +80,7 @@ public class Parser extends DefaultHandler {
 				}
 			};
 			
-			saxParser.parse("SweetHomeStructure.xml", handler);
+			saxParser.parse(filename, handler);
 			
 		} catch (Exception e) {
 			e.printStackTrace(); 
@@ -109,10 +109,5 @@ public class Parser extends DefaultHandler {
 
 			System.out.println();
 		}
-	}
-	
-	public static void main(String[] args) {
-		parse();
-		showData();
 	}
 }

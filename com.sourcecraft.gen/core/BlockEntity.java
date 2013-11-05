@@ -1,8 +1,8 @@
 package core;
 
-public class BlockEntry 
+public class BlockEntity 
 {
-	public BlockEntry(Point3D point, BlockData blockData) {
+	public BlockEntity(Point3D point, BlockData blockData) {
 		super();
 		this.point = point;
 		this.blockData = blockData;

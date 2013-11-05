@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import core.BlockData;
-import core.BlockEntry;
+import core.BlockEntity;
 import core.BuildingData;
-import core.BuildingEntry;
+import core.BuildingEntity;
+import core.CityData;
+import core.CityEntity;
 import core.Point3D;
 import metrics.SimpleClassMetrics;
 
@@ -17,22 +19,22 @@ public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 	private boolean scale = false;
 	
 	@Override
-	public ArrayList<BuildingEntry> design(ArrayList<SimpleClassMetrics> classMetricsList) 
+	public CityEntity design(ArrayList<SimpleClassMetrics> classMetricsList) 
 	{
-		ArrayList<BuildingEntry> buildingEntries = new ArrayList<BuildingEntry>();
+		ArrayList<BuildingEntity> buildingEntries = new ArrayList<BuildingEntity>();
 				
 		for (SimpleClassMetrics c: classMetricsList)
 		{
 			buildingEntries.add(createBuildingEntry(c));
 		}
 		
-		return buildingEntries;
+		return new CityEntity<SimpleClassMetrics>(classMetricsList, buildingEntries, new CityData());
 	}
 	
-	private BuildingEntry createBuildingEntry(SimpleClassMetrics c)
+	private BuildingEntity createBuildingEntry(SimpleClassMetrics c)
 	{
-		
-		ArrayList<BlockEntry> blockEntries = new ArrayList<BlockEntry>();
+		BuildingData buildingData = new BuildingData();
+		ArrayList<BlockEntity> blockEntries = new ArrayList<BlockEntity>();
 		
 		// get a class and return its method and attributes
 		int dimension = 0;
@@ -48,8 +50,13 @@ public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 			dimension = c.getNumAttributes() + 1;
 			height = c.getNumMethods() + 1;
 		}
+		
+		buildingData.setHeight(height);
+		buildingData.setLength(dimension);
+		buildingData.setWidth(dimension);
 
 			//make each block based on attributes, x starting at x going downwards and z going to the right
+		int count = 0;
 		
 		for (int x = 0; x < dimension; x++)
 		{
@@ -59,14 +66,17 @@ public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 				{
 					if (designerHelper.shouldSetBlock(x, y, z, 0, 0, height, dimension))
 					{
-						blockEntries.add(new BlockEntry(new Point3D(x,y,z),new BlockData(1)));
+						blockEntries.add(new BlockEntity(new Point3D(x,y,z),new BlockData(1)));
+						count++;
 					}
 						
 				}
 			}
 		}
 		
-		return new BuildingEntry(c, blockEntries,new BuildingData());
+		buildingData.setBlocks(count);
+		
+		return new BuildingEntity(c, blockEntries,new BuildingData());
 	}
 
 }

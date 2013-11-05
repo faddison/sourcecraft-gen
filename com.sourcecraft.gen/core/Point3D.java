@@ -3,6 +3,8 @@ package core;
 public class Point3D {
 	private int x;
 	private int y;
+	private int z;
+	
 	public Point3D(int x, int y, int z) {
 		super();
 		this.x = x;
@@ -10,11 +12,11 @@ public class Point3D {
 		this.z = z;
 	}
 
-	private int z;
 	
-	public void translate()
+	
+	public Point3D translate(int x, int y, int z)
 	{
-		//todo
+		return new Point3D(this.x + x, this.y + y, this.z + z);
 	}
 
 	public int getX() {

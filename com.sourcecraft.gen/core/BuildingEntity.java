@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 import metrics.AbstractMetrics;
 
-public class BuildingEntry 
+public class BuildingEntity 
 {
 	private AbstractMetrics metrics;
-	private ArrayList<BlockEntry> blockEntries;
+	private ArrayList<BlockEntity> blockEntries;
 	private BuildingData buildingData;
-	public BuildingEntry(AbstractMetrics metrics,
-			ArrayList<BlockEntry> blockEntries, BuildingData buildingData) {
+	public BuildingEntity(AbstractMetrics metrics,
+			ArrayList<BlockEntity> blockEntries, BuildingData buildingData) {
 		super();
 		this.metrics = metrics;
 		this.blockEntries = blockEntries;
@@ -22,10 +22,10 @@ public class BuildingEntry
 	public void setMetrics(AbstractMetrics metrics) {
 		this.metrics = metrics;
 	}
-	public ArrayList<BlockEntry> getBlockEntries() {
+	public ArrayList<BlockEntity> getBlockEntries() {
 		return blockEntries;
 	}
-	public void setBlockEntries(ArrayList<BlockEntry> blockEntries) {
+	public void setBlockEntries(ArrayList<BlockEntity> blockEntries) {
 		this.blockEntries = blockEntries;
 	}
 	public BuildingData getBuildingData() {

@@ -1,6 +1,5 @@
 package metrics;
 
-
 import java.util.List;
 
 public class ClassProperties {

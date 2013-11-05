@@ -3,7 +3,7 @@ package runner;
 import java.io.File;
 import java.util.ArrayList;
 
-import mapper.CityMapGenerator;
+import mapper.MapGenerator;
 import metrics.MetricsDeserializer;
 import metrics.MetricsSerializer;
 import metrics.SimpleClassMetrics;
@@ -37,7 +37,7 @@ public class MainRunner {
 		}
 			
 		(new CityFileGenerator()).generate(metricsList, cityFilename);
-		(new CityMapGenerator()).map(cityFilename, mapFilename);
+		(new MapGenerator()).map(cityFilename, mapFilename);
 	}
 
 }

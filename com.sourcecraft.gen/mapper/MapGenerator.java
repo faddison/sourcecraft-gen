@@ -10,14 +10,14 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-public class CityMapGenerator {
+public class MapGenerator {
 
 	public void map(String inputfile, String outputfile) 
 	{
 		writeCity(readCity(inputfile), outputfile);	
 	}
 	
-	public static ArrayList<Point> readCity(String filename)
+	private ArrayList<Point> readCity(String filename)
     {
 		System.out.println(String.format("Reading %s", filename));
 		ArrayList<Point> list = new ArrayList<Point>();
@@ -61,7 +61,7 @@ public class CityMapGenerator {
 	
     }
 	
-	public static void writeCity(ArrayList<Point> list, String outputfile)
+	private void writeCity(ArrayList<Point> list, String outputfile)
 	{
 		System.out.println(String.format("Wrtiting %s", outputfile));
 		try 

@@ -2,6 +2,6 @@ package core;
 
 public class BlockEntry 
 {
-	private Point3D coordinate;
-	private int blockID;
+	private Point3D point;
+	private BlockData blockData;
 }

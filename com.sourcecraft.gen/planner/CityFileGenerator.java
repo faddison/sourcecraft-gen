@@ -37,7 +37,7 @@ public class CityFileGenerator
 		return filename;
 		
 	}
-	public static int findLargestItem(ArrayList<SimpleClassMetrics> classList){
+	private int findLargestItem(ArrayList<SimpleClassMetrics> classList){
 		int length = classList.size();
 		int max = 0;
 		for (int i = 0; i < length; i++)
@@ -56,7 +56,7 @@ public class CityFileGenerator
 		return max;
 	}
 	
-	private static ArrayList<SimpleClassMetrics> filterClassList(ArrayList<SimpleClassMetrics> classList)
+	private ArrayList<SimpleClassMetrics> filterClassList(ArrayList<SimpleClassMetrics> classList)
 	{
 		
 		int maxBuildings = 50;
@@ -71,7 +71,7 @@ public class CityFileGenerator
 		return newList;
 	}
 	
-	private static boolean isValidBuilding(SimpleClassMetrics c)
+	private boolean isValidBuilding(SimpleClassMetrics c)
 	{
 		int minDimension = 5;
 		int maxDimension = 10;
@@ -84,7 +84,7 @@ public class CityFileGenerator
 				(c.getNumMethods() < maxHeight));
 	}
 
-	public static void generateGrid(ArrayList<SimpleClassMetrics> classList, PrintWriter writer){
+	public void generateGrid(ArrayList<SimpleClassMetrics> classList, PrintWriter writer){
 
 		classList = filterClassList(classList);
 		
@@ -121,7 +121,7 @@ public class CityFileGenerator
 
 	}
 	
-	public static boolean shouldSetBlock(int x, int y, int z, int x_offset, int z_offset, int height, int dimension)
+	private boolean shouldSetBlock(int x, int y, int z, int x_offset, int z_offset, int height, int dimension)
 	{
 		return ((y == height - 1) ||
 				(x == x_offset + dimension - 1) ||
@@ -131,7 +131,7 @@ public class CityFileGenerator
 	}
 
 	// in this method, inputs x and y determine the beginning x and z coordinates of each grid
-	public static void generateBuilding(ArrayList<SimpleClassMetrics> classList, int gridNum, int x_offset, int z_offset, PrintWriter writer)
+	private void generateBuilding(ArrayList<SimpleClassMetrics> classList, int gridNum, int x_offset, int z_offset, PrintWriter writer)
 	{
 
 		// get a class and return its method and attributes

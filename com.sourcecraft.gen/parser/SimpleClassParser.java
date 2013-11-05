@@ -26,7 +26,7 @@ public class SimpleClassParser extends DefaultHandler {
 //	HashMap<String,Integer> m = new HashMap<String,Integer>();
 //	HashMap<String,Integer> a = new HashMap<String,Integer>();
 			
-	public static ArrayList<SimpleClassMetrics> parse(String filename) 
+	public ArrayList<SimpleClassMetrics> parse(String filename) 
 	{
 
 		try {
@@ -89,7 +89,7 @@ public class SimpleClassParser extends DefaultHandler {
 		return classes;
 	}
 	
-	public static void showData() {
+	public void showData() {
 		
 		System.out.println("Number of classes: " + classes.size());
 		

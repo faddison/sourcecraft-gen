@@ -8,8 +8,6 @@ public class DesignerFactory {
 		{
 			case SIMPLEDESIGNER:
 				return new SimpleDesigner();
-			case COMPLEXDESIGNER:
-				return new ComplexDesigner();
 			default:
 				return null;			
 		}

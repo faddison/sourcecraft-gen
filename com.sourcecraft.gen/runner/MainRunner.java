@@ -1,7 +1,13 @@
 package runner;
 
+import java.io.File;
+import java.util.ArrayList;
+
 import mapper.CityMapGenerator;
-import parser.Parser;
+import metrics.MetricsDeserializer;
+import metrics.MetricsSerializer;
+import metrics.SimpleClassMetrics;
+import parser.SimpleClassParser;
 import planner.CityFileGenerator;
 
 public class MainRunner {
@@ -12,14 +18,26 @@ public class MainRunner {
 	 */
 	public static void main(String[] args) 
 	{
-		Parser parser = new Parser();
-		CityFileGenerator cityGen = new CityFileGenerator();
-		CityMapGenerator mapGen = new CityMapGenerator();
+		String metricsFilename = "metrics/simpleclassmetrics-list.list";
+		String sourceFilename = "sources/SweetHomeStructure.xml";
+		String cityFilename = "cities/box.txt";
+		String mapFilename = "maps/map.txt";
 		
-		mapGen.map(
-			cityGen.generate(
-				parser.parse("sources/SweetHomeStructure.xml"), "cities/box.txt"), "maps/map.txt" );
+		ArrayList<SimpleClassMetrics> metricsList = new ArrayList<SimpleClassMetrics>();
+		
+		File file = new File(metricsFilename);
+		if (file.exists())
+		{
+			metricsList = (new MetricsDeserializer<SimpleClassMetrics>()).deserialize(metricsFilename);
+		}
+		else
+		{
+			metricsList = (new SimpleClassParser()).parse(sourceFilename);
+			(new MetricsSerializer<SimpleClassMetrics>()).serialize(metricsList, metricsFilename);
+		}
 			
+		(new CityFileGenerator()).generate(metricsList, cityFilename);
+		(new CityMapGenerator()).map(cityFilename, mapFilename);
 	}
 
 }

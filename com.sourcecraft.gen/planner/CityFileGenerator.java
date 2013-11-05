@@ -6,8 +6,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.lang.Math;
 
-import parser.Parser;
-import metrics.ClassProperties;
+import parser.SimpleClassParser;
+import metrics.SimpleClassMetrics;
 
 public class CityFileGenerator 
 {
@@ -15,7 +15,7 @@ public class CityFileGenerator
 	private static int total_blocks = 0;
 	private static boolean scale = false;
 
-	public String generate(ArrayList<ClassProperties> classes, String filename)
+	public String generate(ArrayList<SimpleClassMetrics> classes, String filename)
 	{
 		PrintWriter writer;
 		try 
@@ -37,7 +37,7 @@ public class CityFileGenerator
 		return filename;
 		
 	}
-	public static int findLargestItem(ArrayList<ClassProperties> classList){
+	public static int findLargestItem(ArrayList<SimpleClassMetrics> classList){
 		int length = classList.size();
 		int max = 0;
 		for (int i = 0; i < length; i++)
@@ -56,14 +56,14 @@ public class CityFileGenerator
 		return max;
 	}
 	
-	private static ArrayList<ClassProperties> filterClassList(ArrayList<ClassProperties> classList)
+	private static ArrayList<SimpleClassMetrics> filterClassList(ArrayList<SimpleClassMetrics> classList)
 	{
 		
 		int maxBuildings = 50;
 		
-		ArrayList<ClassProperties> newList = new ArrayList<ClassProperties>();
+		ArrayList<SimpleClassMetrics> newList = new ArrayList<SimpleClassMetrics>();
 		
-		for (ClassProperties c: classList)
+		for (SimpleClassMetrics c: classList)
 		{
 			if (isValidBuilding(c) && newList.size() < maxBuildings + 1)
 				newList.add(c);
@@ -71,7 +71,7 @@ public class CityFileGenerator
 		return newList;
 	}
 	
-	private static boolean isValidBuilding(ClassProperties c)
+	private static boolean isValidBuilding(SimpleClassMetrics c)
 	{
 		int minDimension = 5;
 		int maxDimension = 10;
@@ -84,7 +84,7 @@ public class CityFileGenerator
 				(c.getNumMethods() < maxHeight));
 	}
 
-	public static void generateGrid(ArrayList<ClassProperties> classList, PrintWriter writer){
+	public static void generateGrid(ArrayList<SimpleClassMetrics> classList, PrintWriter writer){
 
 		classList = filterClassList(classList);
 		
@@ -131,11 +131,11 @@ public class CityFileGenerator
 	}
 
 	// in this method, inputs x and y determine the beginning x and z coordinates of each grid
-	public static void generateBuilding(ArrayList<ClassProperties> classList, int gridNum, int x_offset, int z_offset, PrintWriter writer)
+	public static void generateBuilding(ArrayList<SimpleClassMetrics> classList, int gridNum, int x_offset, int z_offset, PrintWriter writer)
 	{
 
 		// get a class and return its method and attributes
-		ClassProperties c = classList.get(gridNum);
+		SimpleClassMetrics c = classList.get(gridNum);
 		
 		int dimension = 0;
 		int height = 0;

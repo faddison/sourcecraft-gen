@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import metrics.AbstractMetrics;
 
-public class BuildingEntity 
+public class BuildingEntity implements Comparable<BuildingEntity>
 {
 	private AbstractMetrics metrics;
 	private ArrayList<BlockEntity> blockEntries;
@@ -33,6 +33,13 @@ public class BuildingEntity
 	}
 	public void setBuildingData(BuildingData buildingData) {
 		this.buildingData = buildingData;
+	}
+	
+
+	@Override
+	public int compareTo(BuildingEntity buildingEntity) 
+	{	
+		return buildingEntity.buildingData.getLength() - this.buildingData.getLength();
 	}
 	
 }

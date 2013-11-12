@@ -42,7 +42,8 @@ public class SimpleGridPlanner extends AbstractPlanner
 	
 	private void buildPlans(PrintWriter writer, CityEntity cityEntry)
 	{
-		
+		ImprovedGrid grid2 = new ImprovedGrid();
+		grid2.generate(cityEntry);
 		SimpleGrid grid = new SimpleGrid(cityEntry.getClassMetricsList());
 		for (int i = 0; i < cityEntry.getBuildingEntries().size(); i++)
 		{

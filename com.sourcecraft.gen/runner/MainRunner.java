@@ -1,7 +1,8 @@
 package runner;
 
 import templates.AbstractTemplate;
-import templates.SimpleTemplate;
+import templates.NewSimpleTemplate;
+import templates.OldSimpleTemplate;
 
 public class MainRunner {
 
@@ -11,8 +12,19 @@ public class MainRunner {
 	 */
 	public static void main(String[] args) 
 	{
-		AbstractTemplate template = new SimpleTemplate();
-		template.run();
+		try 
+		{
+			AbstractTemplate template;
+			
+			//template = new OldSimpleTemplate();
+			template = new NewSimpleTemplate();
+					
+			template.run();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

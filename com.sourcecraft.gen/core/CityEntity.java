@@ -2,27 +2,17 @@ package core;
 
 import java.util.ArrayList;
 
-import metrics.AbstractMetrics;
-
-public class CityEntity<T extends AbstractMetrics>
+public class CityEntity
 {
-	private ArrayList<T> classMetricsList;
 	private ArrayList<BuildingEntity> buildingEntries;
 	private CityData cityData;
 	
-	public CityEntity(ArrayList<T> classMetricsList,
-			ArrayList<BuildingEntity> buildingEntries, CityData cityData) {
+	public CityEntity(ArrayList<BuildingEntity> buildingEntries, CityData cityData) {
 		super();
-		this.classMetricsList = classMetricsList;
 		this.buildingEntries = buildingEntries;
 		this.cityData = cityData;
 	}
-	public ArrayList<T> getClassMetricsList() {
-		return classMetricsList;
-	}
-	public void setClassMetricsList(ArrayList<T> classMetricsList) {
-		this.classMetricsList = classMetricsList;
-	}
+	
 	public ArrayList<BuildingEntity> getBuildingEntries() {
 		return buildingEntries;
 	}

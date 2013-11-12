@@ -1,5 +1,6 @@
 package metrics;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class SimpleClassMetrics extends AbstractMetrics

@@ -6,22 +6,22 @@ import java.util.ArrayList;
 import mapper.MapGenerator;
 import metrics.MetricsDeserializer;
 import metrics.MetricsSerializer;
+import metrics.SerializationWrapper;
 import metrics.SimpleClassMetrics;
 import designer.SimpleDesigner;
 import parser.SimpleClassParser;
 import planner.CityFileGenerator;
 import planner.SimpleGridPlanner;
 
-public class SimpleTemplate extends AbstractTemplate {
+public class OldSimpleTemplate extends AbstractTemplate {
 	
 	
-	public SimpleTemplate()
+	public OldSimpleTemplate()
 	{
 		super();
 		designer = new SimpleDesigner();
 		planner = new SimpleGridPlanner();
-		serializer = new MetricsSerializer();
-		deserializer = new MetricsDeserializer<SimpleClassMetrics>();
+		serializationWrapper = new SerializationWrapper<SimpleClassMetrics>();
 		parser = new SimpleClassParser();
 		
 		metricsFilename = "metrics/simpleclassmetrics-list.list";
@@ -31,6 +31,7 @@ public class SimpleTemplate extends AbstractTemplate {
 	}
 
 	// suppress type check because we know what the types are
+	// this needs to be resolved but for now its fine
 	@SuppressWarnings("unchecked")
 	@Override
 	public void run() 
@@ -40,12 +41,12 @@ public class SimpleTemplate extends AbstractTemplate {
 		File file = new File(metricsFilename);
 		if (file.exists())
 		{
-			metricsList = (ArrayList<SimpleClassMetrics>) deserializer.deserialize(metricsFilename);
+			metricsList = (ArrayList<SimpleClassMetrics>) serializationWrapper.deserializer.deserialize(metricsFilename);
 		}
 		else
 		{
 			metricsList =  (ArrayList<SimpleClassMetrics>) parser.parse(sourceFilename);
-			serializer.serialize(metricsList, metricsFilename);
+			serializationWrapper.serializer.serialize(metricsList, metricsFilename);
 		}
 			
 		(new CityFileGenerator()).generate(metricsList, cityFilename);

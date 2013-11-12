@@ -4,15 +4,17 @@ import java.awt.Point;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import core.BuildingEntity;
+import core.CityEntity;
 import metrics.SimpleClassMetrics;
 
 public class SimpleGrid 
 {
 	ArrayList<Point> cells;
 	
-	public SimpleGrid(ArrayList<SimpleClassMetrics> classList)
+	public SimpleGrid(CityEntity cityEntity)
 	{
-		this.cells = generate(classList);
+		this.cells = generate(cityEntity);
 	}
 	
 	public ArrayList<Point> getCells() {
@@ -23,15 +25,15 @@ public class SimpleGrid
 		this.cells = cells;
 	}
 
-	private ArrayList<Point> generate(ArrayList<SimpleClassMetrics> classList)
+	private ArrayList<Point> generate(CityEntity cityEntity)
 	{
 		ArrayList<Point> cells = new ArrayList<Point>();
 		
 		// cell size is based off of the largest attribute number
-		int cellSize = findLargestItem(classList) + 1;
+		int cellSize = cityEntity.getCityData().getMaxLength();
 
 		// numGrids will depend on the number of classes we look through
-		double numGrids = (double) classList.size();
+		double numGrids = (double) cityEntity.getBuildingEntries().size();
 
 		// numCell is the number of cells we have per side (assume square world)
 		int numCell = (int) Math.ceil(Math.sqrt(numGrids));
@@ -49,7 +51,7 @@ public class SimpleGrid
 		{
 			for (int j = 0; j < gridSide; j += cellSize + cellPadding)
 			{
-				if (counter < classList.size())
+				if (counter < cityEntity.getBuildingEntries().size())
 				{
 					cells.add(new Point(i,j));
 					counter++;
@@ -59,17 +61,4 @@ public class SimpleGrid
 		
 		return cells;
 	}
-	
-	private int findLargestItem(ArrayList<SimpleClassMetrics> classList)
-	{
-		int length = classList.size();
-		int max = 0;
-		for (int i = 0; i < length; i++)
-		{
-				if (max < classList.get(i).getNumAttributes())
-					max = (int) classList.get(i).getNumAttributes();
-		}
-		return max;
-	}
-
 }

@@ -16,40 +16,55 @@ public class ImprovedGrid
 	public ArrayList<Point> generate(CityEntity cityEntity)
 	{
 
-		// sort in descending order of length
-		Collections.sort(cityEntity.getBuildingEntries());
-		// build a map to store number and size of cells required by classes
-		HashMap<BuildingEntity, Integer> gridSizes = new HashMap<BuildingEntity, Integer>();
-		HashMap<Integer, Integer> numGrids = new HashMap<Integer, Integer>();
+		cityEntity.getBuildingEntries();
+		HashMap<Integer, ArrayList<BuildingEntity>> buildingSizes = new HashMap<Integer, ArrayList<BuildingEntity>>();
 		
-		int size = ((BuildingEntity)cityEntity.getBuildingEntries().get(0)).getBuildingData().getLength();
-		int maxSize = size;
-		int count = 0;
-		size = (int) Math.round(Math.ceil(maxSize / 4)) * 4;
-		
-		for (BuildingEntity e: (ArrayList<BuildingEntity>) cityEntity.getBuildingEntries())
+		for (BuildingEntity b: cityEntity.getBuildingEntries())
 		{
-			if (e.getBuildingData().getLength() < maxSize / 4)
-				size /= 4;
-			if (numGrids.containsKey(size))
-				numGrids.put(size, numGrids.get(size)+1);
-			else
-				numGrids.put(size, 1);
-			gridSizes.put(e,size);
+			int power = get4thPower(b.getBuildingData().getLength());
+			if (!buildingSizes.containsKey(power))
+				buildingSizes.put(power, new ArrayList<BuildingEntity>());
+			ArrayList<BuildingEntity> list = buildingSizes.get(power);
+			list.add(b);
+			buildingSizes.put(power, list);
 		}
 		
-		int totalCells = 0;
+		ArrayList<ArrayList<BuildingEntity>> buildingList = new ArrayList<ArrayList<BuildingEntity>>();
 		
-		for (Integer key: numGrids.keySet())
+		int maxPower = get4thPower(cityEntity.getCityData().getMaxLength());
+		int elements = 0;
+		
+		for (int power: buildingSizes.keySet())
 		{
-			totalCells += numGrids.get(key) / (maxSize / key);
+			elements = (maxPower == power)? 1 : (maxPower - power) * 4;
+			buildingList.addAll(divideList(buildingSizes.get(power), elements));
 		}
 		
 		return null;
 	}
 	
-	private void generateHelper()
+	private int get4thPower(int n)
 	{
-			
+		return (int) Math.ceil(Math.pow(n, 1 / 4));
+	}
+	
+	private ArrayList<ArrayList<BuildingEntity>> divideList(ArrayList<BuildingEntity> list, int n)
+	{
+		ArrayList<ArrayList<BuildingEntity>> newList = new ArrayList<ArrayList<BuildingEntity>>();
+		
+		int i = 0;
+		for (i = 0; i < list.size(); i += n);
+		{
+			ArrayList<BuildingEntity> subList = new ArrayList<BuildingEntity>();
+			for (int j = i; j <  + n; j++)
+			{
+				if (j < list.size())
+					subList.add(list.get(j));
+				else
+					break;
+			}
+			newList.add(subList);
+		}
+		return newList;
 	}
 }

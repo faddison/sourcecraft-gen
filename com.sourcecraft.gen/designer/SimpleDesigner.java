@@ -16,16 +16,19 @@ public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 	private boolean scale = false;
 	
 	@Override
-	public CityEntity<SimpleClassMetrics> design(ArrayList<SimpleClassMetrics> classMetricsList) 
+	public CityEntity design(ArrayList<SimpleClassMetrics> classMetricsList) 
 	{
 		ArrayList<BuildingEntity> buildingEntries = new ArrayList<BuildingEntity>();
 				
+		int count = 1;
 		for (SimpleClassMetrics c: classMetricsList)
 		{
+			System.out.println(String.format("Constructing building %s", count));
 			buildingEntries.add(createBuildingEntry(c));
+			count++;
 		}
 		
-		return new CityEntity<SimpleClassMetrics>(classMetricsList, buildingEntries, new CityData());
+		return new CityEntity(buildingEntries, new CityData());
 	}
 	
 	private BuildingEntity createBuildingEntry(SimpleClassMetrics c)

@@ -2,19 +2,17 @@ package templates;
 
 import designer.AbstractDesigner;
 import metrics.AbstractMetrics;
-import metrics.MetricsDeserializer;
-import metrics.MetricsSerializer;
+import metrics.SerializationWrapper;
 import parser.AbstractParser;
 import planner.AbstractPlanner;
 
-public abstract class AbstractTemplate {
+public abstract class AbstractTemplate<T extends AbstractMetrics> {
 
-	protected AbstractDesigner<?> designer;
+	protected AbstractDesigner<T> designer;
 	protected AbstractPlanner planner;
 	protected AbstractMetrics metrics;
-	protected MetricsSerializer serializer;
-	protected MetricsDeserializer<?> deserializer;
-	protected AbstractParser<?> parser;
+	protected SerializationWrapper<T> serializationWrapper;
+	protected AbstractParser<T> parser;
 	
 	protected String metricsFilename;
 	protected String sourceFilename;

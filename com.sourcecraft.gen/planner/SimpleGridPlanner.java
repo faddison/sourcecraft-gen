@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.lang.Math;
 
 import core.BlockEntity;
+import core.BuildingData;
 import core.BuildingEntity;
 import core.CityEntity;
 import core.Point3D;
@@ -44,7 +45,7 @@ public class SimpleGridPlanner extends AbstractPlanner
 	{
 		ImprovedGrid grid2 = new ImprovedGrid();
 		grid2.generate(cityEntry);
-		SimpleGrid grid = new SimpleGrid(cityEntry.getClassMetricsList());
+		SimpleGrid grid = new SimpleGrid(cityEntry);
 		for (int i = 0; i < cityEntry.getBuildingEntries().size(); i++)
 		{
 			Point cell = grid.getCells().get(i);
@@ -58,31 +59,31 @@ public class SimpleGridPlanner extends AbstractPlanner
 		}		
 	}
 	
-	private ArrayList<SimpleClassMetrics> filterClassList(ArrayList<SimpleClassMetrics> classList)
+	private ArrayList<BuildingEntity> filterBuildingEntities(ArrayList<BuildingEntity> buildingEntities)
 	{
 		
 		int maxBuildings = 50;
 		
-		ArrayList<SimpleClassMetrics> newList = new ArrayList<SimpleClassMetrics>();
+		ArrayList<BuildingEntity> list = new ArrayList<BuildingEntity>();
 		
-		for (SimpleClassMetrics c: classList)
+		for (BuildingEntity b: buildingEntities)
 		{
-			if (isValidBuilding(c) && newList.size() < maxBuildings + 1)
-				newList.add(c);
+			if (isValidBuilding(b.getBuildingData()) && list.size() < maxBuildings + 1)
+				list.add(b);
 		}
-		return newList;
+		return list;
 	}
 	
-	private boolean isValidBuilding(SimpleClassMetrics c)
+	private boolean isValidBuilding(BuildingData d)
 	{
 		int minDimension = 5;
 		int maxDimension = 10;
 		int minHeight = 5;
 		int maxHeight = 50;
 		
-		return ((c.getNumAttributes() > minDimension) &&
-				(c.getNumAttributes() < maxDimension) &&
-				(c.getNumMethods() > minHeight) &&
-				(c.getNumMethods() < maxHeight));
+		return ((d.getLength() > minDimension) &&
+				(d.getLength() < maxDimension) &&
+				(d.getHeight() > minHeight) &&
+				(d.getHeight() < maxHeight));
 	}
 }

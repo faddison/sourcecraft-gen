@@ -4,9 +4,9 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class MetricsSerializer
+public class MetricsSerializer<T extends AbstractMetrics>
 {
-	public void serialize(ArrayList<?> metricsList, String filename)
+	public void serialize(ArrayList<T> metricsList, String filename)
 	{
         try 
         {

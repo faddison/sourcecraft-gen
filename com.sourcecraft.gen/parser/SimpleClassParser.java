@@ -1,21 +1,17 @@
 package parser;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import metrics.AbstractMetrics;
 import metrics.SimpleClassMetrics;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.Attributes;
 
-public class SimpleClassParser extends DefaultHandler {
+public class SimpleClassParser extends AbstractParser<SimpleClassMetrics>{
 
 	private static ArrayList<SimpleClassMetrics> classes = new ArrayList<SimpleClassMetrics>();
 	

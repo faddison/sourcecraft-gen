@@ -1,9 +1,6 @@
 package designer;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
-
 import core.BlockData;
 import core.BlockEntity;
 import core.BuildingData;
@@ -19,7 +16,7 @@ public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 	private boolean scale = false;
 	
 	@Override
-	public CityEntity design(ArrayList<SimpleClassMetrics> classMetricsList) 
+	public CityEntity<SimpleClassMetrics> design(ArrayList<SimpleClassMetrics> classMetricsList) 
 	{
 		ArrayList<BuildingEntity> buildingEntries = new ArrayList<BuildingEntity>();
 				

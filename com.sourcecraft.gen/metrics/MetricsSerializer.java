@@ -1,19 +1,18 @@
 package metrics;
 
-import java.awt.List;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class MetricsSerializer<T extends AbstractMetrics>
+public class MetricsSerializer
 {
-	public void serialize(ArrayList<T> list, String filename)
+	public void serialize(ArrayList<?> metricsList, String filename)
 	{
         try 
         {
         	FileOutputStream fos = new FileOutputStream(filename);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(list); 
+            oos.writeObject(metricsList); 
             oos.close();
             
         } catch (Exception e)

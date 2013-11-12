@@ -36,11 +36,7 @@ public class ImprovedGrid
 			buildingList.addAll(divideList(buildingSizes.get(power), elements));
 		}
 		
-		
-		
-		
-		
-		return null;
+		return buildingList;
 	}
 	
 	private ArrayList<ArrayList<BuildingEntity>> divideList(ArrayList<BuildingEntity> list, int n)

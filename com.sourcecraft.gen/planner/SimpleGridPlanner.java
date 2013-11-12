@@ -13,13 +13,13 @@ import core.BuildingEntity;
 import core.CityEntity;
 import core.Point3D;
 import parser.SimpleClassParser;
+import util.Mathematician;
 import metrics.SimpleClassMetrics;
 
 public class SimpleGridPlanner extends AbstractPlanner
 {
 
 	private static int total_blocks = 0;
-	private static boolean scale = false;
 	
 	@Override
 	public String plan(CityEntity cityEntry) 
@@ -43,47 +43,52 @@ public class SimpleGridPlanner extends AbstractPlanner
 	
 	private void buildPlans(PrintWriter writer, CityEntity cityEntry)
 	{
-		ImprovedGrid grid2 = new ImprovedGrid();
-		grid2.generate(cityEntry);
-		SimpleGrid grid = new SimpleGrid(cityEntry);
-		for (int i = 0; i < cityEntry.getBuildingEntries().size(); i++)
+		ImprovedGrid grid = new ImprovedGrid();
+		
+		ArrayList<ArrayList<BuildingEntity>> buildingList = grid.generate(cityEntry);		
+		
+		int maxLength = Mathematician.get4thPower(cityEntry.getCityData().getMaxLength());
+		int maxPower = Mathematician.get4thRoot(cityEntry.getCityData().getMaxLength());
+		
+		ArrayList<Point> cellLocations = getCellLocations(maxLength, buildingList.size());
+		
+		for (Point p: cellLocations)
 		{
-			Point cell = grid.getCells().get(i);
-			BuildingEntity buildingEntry = (BuildingEntity) cityEntry.getBuildingEntries().get(i);
-			for (int j = 0; j < buildingEntry.getBlockEntries().size(); j++)
+			for (ArrayList<BuildingEntity> list: buildingList)
 			{
-				BlockEntity blockEntry = buildingEntry.getBlockEntries().get(j);
-				Point3D p = blockEntry.getPoint().translate(cell.x, 0, cell.y);
-				writer.print(String.format("%d %d %d %d", blockEntry.getBlockData().getId(), p.getX(), p.getY(), p.getZ()));
-			}
-		}		
+				int cellOffset = getCellOffset(list.size(), maxPower);
+				for (int i = 0; i < list.size() / 2; i++)
+				{
+					for (int j = 0; j < list.size() / 2; j++)
+					{
+						BuildingEntity building = list.get(i+j);
+						int x = p.x + i * cellOffset;
+						int z = p.y + j * cellOffset;
+						placeBuildingBlocks(writer, building, x, 0, z);
+					}
+				}
+			}	
+		}	
 	}
 	
-	private ArrayList<BuildingEntity> filterBuildingEntities(ArrayList<BuildingEntity> buildingEntities)
+	private void placeBuildingBlocks(PrintWriter writer, BuildingEntity building, int xOffset, int yOffset, int zOffset)
 	{
-		
-		int maxBuildings = 50;
-		
-		ArrayList<BuildingEntity> list = new ArrayList<BuildingEntity>();
-		
-		for (BuildingEntity b: buildingEntities)
+		for (BlockEntity blockEntity: building.getBlockEntries())
 		{
-			if (isValidBuilding(b.getBuildingData()) && list.size() < maxBuildings + 1)
-				list.add(b);
+			Point3D p = blockEntity.getPoint().translate(xOffset,  yOffset, zOffset);
+			writer.print(String.format("%d %d %d %d", blockEntity.getBlockData().getId(), p.getX(), p.getY(), p.getZ()));	
 		}
-		return list;
 	}
 	
-	private boolean isValidBuilding(BuildingData d)
+	private ArrayList<Point> getCellLocations(int maxLength, int numCells)
 	{
-		int minDimension = 5;
-		int maxDimension = 10;
-		int minHeight = 5;
-		int maxHeight = 50;
-		
-		return ((d.getLength() > minDimension) &&
-				(d.getLength() < maxDimension) &&
-				(d.getHeight() > minHeight) &&
-				(d.getHeight() < maxHeight));
+		return new ArrayList<Point>();
 	}
+	
+	private int getCellOffset(int listSize, int maxPower)
+	{
+		return 0;
+	}
+	
+	
 }

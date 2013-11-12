@@ -1,19 +1,15 @@
 package planner;
 
-import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
+import util.Mathematician;
 import core.BuildingEntity;
 import core.CityEntity;
-import metrics.SimpleClassMetrics;
 
 public class ImprovedGrid 
-{
-	ArrayList<BuildingCell> buildingCells;
-	
-	public ArrayList<Point> generate(CityEntity cityEntity)
+{	
+	public ArrayList<ArrayList<BuildingEntity>> generate(CityEntity cityEntity)
 	{
 
 		cityEntity.getBuildingEntries();
@@ -21,7 +17,7 @@ public class ImprovedGrid
 		
 		for (BuildingEntity b: cityEntity.getBuildingEntries())
 		{
-			int power = get4thPower(b.getBuildingData().getLength());
+			int power = Mathematician.get4thRoot(b.getBuildingData().getLength());
 			if (!buildingSizes.containsKey(power))
 				buildingSizes.put(power, new ArrayList<BuildingEntity>());
 			ArrayList<BuildingEntity> list = buildingSizes.get(power);
@@ -31,7 +27,7 @@ public class ImprovedGrid
 		
 		ArrayList<ArrayList<BuildingEntity>> buildingList = new ArrayList<ArrayList<BuildingEntity>>();
 		
-		int maxPower = get4thPower(cityEntity.getCityData().getMaxLength());
+		int maxPower = Mathematician.get4thRoot((cityEntity.getCityData().getMaxLength()));
 		int elements = 0;
 		
 		for (int power: buildingSizes.keySet())
@@ -40,12 +36,11 @@ public class ImprovedGrid
 			buildingList.addAll(divideList(buildingSizes.get(power), elements));
 		}
 		
+		
+		
+		
+		
 		return null;
-	}
-	
-	private int get4thPower(int n)
-	{
-		return (int) Math.ceil(Math.pow(n, 1 / 4));
 	}
 	
 	private ArrayList<ArrayList<BuildingEntity>> divideList(ArrayList<BuildingEntity> list, int n)
@@ -61,7 +56,7 @@ public class ImprovedGrid
 				if (j < list.size())
 					subList.add(list.get(j));
 				else
-					break;
+					subList.add(new BuildingEntity(null, null, null)); // make sure to check for this later
 			}
 			newList.add(subList);
 		}

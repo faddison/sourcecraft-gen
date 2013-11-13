@@ -56,6 +56,8 @@ public class ImprovedGridPlanner extends AbstractPlanner
 			int j = 0;
 			int k = 0;
 			
+			// cell offset might be wrong and number of building in grid is off by 1
+			
 			// this loop alternates between incrementing i and j by checking if k is even
 			for (BuildingEntity building: list)
 			{
@@ -63,7 +65,7 @@ public class ImprovedGridPlanner extends AbstractPlanner
 				int z = p.y + j * cellOffset;
 				
 				// sometimes we put null buildings inside, just for fun
-				if (building != null)
+				if (building.getBlockEntries() != null)
 				{
 					System.out.println(String.format("Writing building %d",count));
 					placeBuildingBlocks(writer, building, x, 0, z);
@@ -92,7 +94,7 @@ public class ImprovedGridPlanner extends AbstractPlanner
 	private ArrayList<Point> getCellLocations(int maxLength, int numCells)
 	{
 		ArrayList<Point> list = new ArrayList<Point>();
-		int size = (int) Math.ceil(numCells / 2);
+		int size = (int) Math.ceil(Math.sqrt(numCells));
 		for (int i = 0; i < size; i++)
 		{
 			for (int j = 0; j < size; j++)
@@ -116,7 +118,7 @@ public class ImprovedGridPlanner extends AbstractPlanner
 	 * For example, if the largest cell is size 16x16 and the list size is 4 (max power = 2), 
 	 * then we need to place those four buildings at 
 	 * the right offsets in the master cell. In the 16x16 case the Cell offset returned by 
-	 * this method would be 4. If the list size was 8, then the offset would be 2.
+	 * this method would be 4.
 	 * 
 	 * The list size should be guaranteed to be a power of 4
 	 */

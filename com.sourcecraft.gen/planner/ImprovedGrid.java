@@ -32,7 +32,7 @@ public class ImprovedGrid
 		
 		for (int power: buildingSizes.keySet())
 		{
-			elements = (power == maxPower)? 1 : (maxPower - power) * 4;
+			elements = (power == maxPower)? 1 : (int) Math.pow(4, (maxPower - power));
 			buildingList.addAll(divideList(buildingSizes.get(power), elements));
 		}
 		
@@ -52,7 +52,7 @@ public class ImprovedGrid
 				if (j < list.size())
 					subList.add(list.get(j));
 				else
-					subList.add(null); // make sure to check for this later
+					subList.add(new BuildingEntity(null, null, null)); // make sure to check for this later
 			}
 			newList.add(subList);
 		}

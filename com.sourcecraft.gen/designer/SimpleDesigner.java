@@ -18,17 +18,28 @@ public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 	@Override
 	public CityEntity design(ArrayList<SimpleClassMetrics> classMetricsList) 
 	{
+		classMetricsList = designerHelper.filterBuildingEntities(classMetricsList);
 		ArrayList<BuildingEntity> buildingEntries = new ArrayList<BuildingEntity>();
-				
+		CityData cityData = new CityData();
+		
 		int count = 1;
+		int maxLength = 0;
+		int maxHeight = 0;
+		
 		for (SimpleClassMetrics c: classMetricsList)
 		{
 			System.out.println(String.format("Constructing building %s", count));
 			buildingEntries.add(createBuildingEntry(c));
+			maxLength = c.getNumAttributes() > maxLength? c.getNumAttributes() : maxLength;
+			maxHeight = c.getNumMethods() > maxHeight? c.getNumMethods() : maxHeight;
 			count++;
 		}
 		
-		return new CityEntity(buildingEntries, new CityData());
+		cityData.setMaxHeight(maxHeight);
+		cityData.setMaxLength(maxLength);
+		cityData.setMaxWidth(maxLength);
+		
+		return new CityEntity(buildingEntries, cityData);
 	}
 	
 	private BuildingEntity createBuildingEntry(SimpleClassMetrics c)
@@ -76,7 +87,7 @@ public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 		
 		buildingData.setBlocks(count);
 		
-		return new BuildingEntity(c, blockEntries,new BuildingData());
+		return new BuildingEntity(c, blockEntries, buildingData);
 	}
 
 }

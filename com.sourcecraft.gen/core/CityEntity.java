@@ -13,6 +13,10 @@ public class CityEntity
 		this.cityData = cityData;
 	}
 	
+	public CityEntity() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public ArrayList<BuildingEntity> getBuildingEntries() {
 		return buildingEntries;
 	}

@@ -31,8 +31,10 @@ public class MapGenerator {
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String strLine;
+			int count = 1;
 			while ((strLine = br.readLine()) != null)   
 			{
+				
 				String[] args = strLine.split(" ");
 				int blockID = Integer.parseInt(args[0]);
 				int x = Integer.parseInt(args[1]);
@@ -41,9 +43,11 @@ public class MapGenerator {
 				Point p = new Point(x,z);
 				if (!list.contains(p))
 				{
+					System.out.println(String.format("Point %d: %d, %d",count, x, z));
 					list.add(new Point(x, z));
 					if (x > xMax) xMax = x;
 					if (z > zMax) zMax = z;
+					count++;
 				}
 				//System.out.println(String.format("New point: %d, %d", x, z));
 			}

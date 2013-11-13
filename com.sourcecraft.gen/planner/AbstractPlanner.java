@@ -10,5 +10,5 @@ import core.CityEntity;
 public abstract class AbstractPlanner {
 
 	// returns filename
-	public abstract String plan(CityEntity cityEntry);
+	public abstract String plan(CityEntity cityEntry, String filename);
 }

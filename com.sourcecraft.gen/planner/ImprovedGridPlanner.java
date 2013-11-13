@@ -1,20 +1,14 @@
 package planner;
 
 import java.awt.Point;
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.lang.Math;
 
+import util.Mathematician;
 import core.BlockEntity;
-import core.BuildingData;
 import core.BuildingEntity;
 import core.CityEntity;
 import core.Point3D;
-import parser.SimpleClassParser;
-import util.Mathematician;
-import metrics.SimpleClassMetrics;
 
 public class ImprovedGridPlanner extends AbstractPlanner
 {
@@ -22,13 +16,13 @@ public class ImprovedGridPlanner extends AbstractPlanner
 	private static int total_blocks = 0;
 	
 	@Override
-	public String plan(CityEntity cityEntry) 
+	public String plan(CityEntity cityEntry, String filename) 
 	{
 		
 		try 
 		{
 			PrintWriter writer;
-			writer = new PrintWriter("box.txt", "UTF-8");
+			writer = new PrintWriter(filename, "UTF-8");
 			buildPlans(writer, cityEntry);
 			writer.close();
 			System.out.println(String.format("lines : %d", total_blocks));
@@ -52,22 +46,36 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		
 		ArrayList<Point> cellLocations = getCellLocations(maxLength, buildingList.size());
 		
-		for (Point p: cellLocations)
+		int count = 1;
+		for (int cellIndex = 0; cellIndex < buildingList.size(); cellIndex++)
 		{
-			for (ArrayList<BuildingEntity> list: buildingList)
+			Point p = cellLocations.get(cellIndex);
+			ArrayList<BuildingEntity> list = buildingList.get(cellIndex);
+			int cellOffset = getCellOffset(list.size(), maxPower);
+			int i = 0;
+			int j = 0;
+			int k = 0;
+			
+			// this loop alternates between incrementing i and j by checking if k is even
+			for (BuildingEntity building: list)
 			{
-				int cellOffset = getCellOffset(list.size(), maxPower);
-				for (int i = 0; i < list.size() / 2; i++)
+				int x = p.x + i * cellOffset;
+				int z = p.y + j * cellOffset;
+				
+				// sometimes we put null buildings inside, just for fun
+				if (building != null)
 				{
-					for (int j = 0; j < list.size() / 2; j++)
-					{
-						BuildingEntity building = list.get(i+j);
-						int x = p.x + i * cellOffset;
-						int z = p.y + j * cellOffset;
-						placeBuildingBlocks(writer, building, x, 0, z);
-					}
+					System.out.println(String.format("Writing building %d",count));
+					placeBuildingBlocks(writer, building, x, 0, z);
+					count++;
 				}
-			}	
+				
+				if (Mathematician.isEven(k))
+					i++;
+				else
+					j++;
+				k++;
+			}
 		}	
 	}
 	
@@ -76,17 +84,18 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		for (BlockEntity blockEntity: building.getBlockEntries())
 		{
 			Point3D p = blockEntity.getPoint().translate(xOffset,  yOffset, zOffset);
-			writer.print(String.format("%d %d %d %d", blockEntity.getBlockData().getId(), p.getX(), p.getY(), p.getZ()));	
+			//System.out.println(String.format("Placing block: %d, %d, %d", p.getX(), p.getY(), p.getZ()));
+			writer.print(String.format("%d %d %d %d\n", blockEntity.getBlockData().getId(), p.getX(), p.getY(), p.getZ()));	
 		}
 	}
 	
 	private ArrayList<Point> getCellLocations(int maxLength, int numCells)
 	{
 		ArrayList<Point> list = new ArrayList<Point>();
-		int size = (int) Math.ceil(numCells);
-		for (int i = 0; i < size / 2; i++)
+		int size = (int) Math.ceil(numCells / 2);
+		for (int i = 0; i < size; i++)
 		{
-			for (int j = 0; j < size / 2; j++)
+			for (int j = 0; j < size; j++)
 			{
 				list.add(new Point(i*maxLength, j*maxLength));
 			}
@@ -99,9 +108,21 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		return new ArrayList<Point>();
 	}
 	
+	/*
+	 * Given the size of the list and the maximum power of 4 determine where to place
+	 * smaller buildings within the full size of the cell. The max power corresponds 
+	 * to the dimensions of the largest cell, 4 ^ maxPower.
+	 * 
+	 * For example, if the largest cell is size 16x16 and the list size is 4 (max power = 2), 
+	 * then we need to place those four buildings at 
+	 * the right offsets in the master cell. In the 16x16 case the Cell offset returned by 
+	 * this method would be 4. If the list size was 8, then the offset would be 2.
+	 * 
+	 * The list size should be guaranteed to be a power of 4
+	 */
 	private int getCellOffset(int listSize, int maxPower)
 	{
-		return 0;
+		return (int)Math.pow(4, maxPower)/listSize;
 	}
 	
 	

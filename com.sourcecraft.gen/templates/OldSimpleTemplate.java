@@ -11,7 +11,7 @@ import metrics.SimpleClassMetrics;
 import designer.SimpleDesigner;
 import parser.SimpleClassParser;
 import planner.CityFileGenerator;
-import planner.SimpleGridPlanner;
+import planner.ImprovedGridPlanner;
 
 public class OldSimpleTemplate extends AbstractTemplate {
 	
@@ -20,7 +20,7 @@ public class OldSimpleTemplate extends AbstractTemplate {
 	{
 		super();
 		designer = new SimpleDesigner();
-		planner = new SimpleGridPlanner();
+		planner = new ImprovedGridPlanner();
 		serializationWrapper = new SerializationWrapper<SimpleClassMetrics>();
 		parser = new SimpleClassParser();
 		

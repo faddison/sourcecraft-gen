@@ -7,7 +7,7 @@ public class PlannerFactory {
 		switch (type)
 		{
 			case SIMPLEGRIDPLANNER:
-				return new SimpleGridPlanner();
+				return new ImprovedGridPlanner();
 			case COMPLEXGRIDPLANNER:
 				return new ComplexGridPlanner();
 			default:

@@ -16,7 +16,7 @@ import parser.SimpleClassParser;
 import util.Mathematician;
 import metrics.SimpleClassMetrics;
 
-public class SimpleGridPlanner extends AbstractPlanner
+public class ImprovedGridPlanner extends AbstractPlanner
 {
 
 	private static int total_blocks = 0;
@@ -81,6 +81,20 @@ public class SimpleGridPlanner extends AbstractPlanner
 	}
 	
 	private ArrayList<Point> getCellLocations(int maxLength, int numCells)
+	{
+		ArrayList<Point> list = new ArrayList<Point>();
+		int size = (int) Math.ceil(numCells);
+		for (int i = 0; i < size / 2; i++)
+		{
+			for (int j = 0; j < size / 2; j++)
+			{
+				list.add(new Point(i*maxLength, j*maxLength));
+			}
+		}
+		return list;
+	}
+	
+	private ArrayList<Point> getCellLocationsSpiral(int maxLength, int numCells)
 	{
 		return new ArrayList<Point>();
 	}

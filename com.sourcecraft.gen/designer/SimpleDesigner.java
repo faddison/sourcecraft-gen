@@ -36,8 +36,8 @@ public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 		}
 		
 		cityData.setMaxHeight(maxHeight);
-		cityData.setMaxLength(maxLength);
-		cityData.setMaxWidth(maxLength);
+		cityData.setMaxLength(maxLength+1);
+		cityData.setMaxWidth(maxLength+1);
 		
 		return new CityEntity(buildingEntries, cityData);
 	}
@@ -63,8 +63,8 @@ public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 		}
 		
 		buildingData.setHeight(height);
-		buildingData.setLength(dimension);
-		buildingData.setWidth(dimension);
+		buildingData.setLength(dimension+1);
+		buildingData.setWidth(dimension+1);
 
 			//make each block based on attributes, x starting at x going downwards and z going to the right
 		int count = 0;

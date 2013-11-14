@@ -3,6 +3,7 @@ package planner;
 import java.awt.Point;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import util.Mathematician;
 import core.BlockEntity;
@@ -39,44 +40,80 @@ public class ImprovedGridPlanner extends AbstractPlanner
 	{
 		ImprovedGrid grid = new ImprovedGrid();
 		
-		ArrayList<ArrayList<BuildingEntity>> buildingList = grid.generate(cityEntry);		
+		ArrayList<ArrayList<BuildingEntity>> buildingList = grid.generate(cityEntry);
+		Collections.shuffle(buildingList);
 		
-		int maxLength = Mathematician.get4thPower(cityEntry.getCityData().getMaxLength());
-		int maxPower = Mathematician.get4thRoot(cityEntry.getCityData().getMaxLength());
+		int maxLength = Mathematician.ceil2ndPower(cityEntry.getCityData().getMaxLength());
+		int maxPower = Mathematician.ceilLog2(cityEntry.getCityData().getMaxLength());
 		
 		ArrayList<Point> cellLocations = getCellLocations(maxLength, buildingList.size());
 		
-		int count = 1;
+		ArrayList<BuildingEntity> lostBuildings = new ArrayList<BuildingEntity>();
+		
+		int bcount = 1;
+		int ncount = 1;
+		int ntotal = 1;
+		int btotal = 1;
 		for (int cellIndex = 0; cellIndex < buildingList.size(); cellIndex++)
 		{
+			ncount = 0;
+			bcount = 0;
 			Point p = cellLocations.get(cellIndex);
 			ArrayList<BuildingEntity> list = buildingList.get(cellIndex);
-			int cellOffset = getCellOffset(list.size(), maxPower);
-			int i = 0;
-			int j = 0;
-			int k = 0;
+			int power = Mathematician.ceilLog2(list.get(0).getBuildingData().getLength());
+			int cellOffset = (int) Math.pow(2,power);
+			
+			int xIndex = 0;
+			int zIndex = 0;
+			int xPadding = 0;
+			int zPadding = 0;
 			
 			// cell offset might be wrong and number of building in grid is off by 1
 			
 			// this loop alternates between incrementing i and j by checking if k is even
 			for (BuildingEntity building: list)
 			{
-				int x = p.x + i * cellOffset;
-				int z = p.y + j * cellOffset;
+				int xOffset = (xIndex * cellOffset) + xIndex;
+				int zOffset = (zIndex * cellOffset) + zIndex;
+						
+				int x = p.x + xOffset;
+				int z = p.y + zOffset;
 				
+				
+				// add padding to inside of cells
+				// limit the number of buildings in each cell by counting the columns
+				// and rows to account for padding
+							
 				// sometimes we put null buildings inside, just for fun
-				if (building.getBlockEntries() != null)
+				if (building != null)
 				{
-					System.out.println(String.format("Writing building %d",count));
+					System.out.println(String.format("Writing building %d",bcount));
 					placeBuildingBlocks(writer, building, x, 0, z);
-					count++;
+					bcount++;
+					btotal++;
+					
+					if (xOffset < maxLength - cellOffset - xIndex + 1)
+					{
+						xIndex++;
+					}
+					else if (zOffset < maxLength - cellOffset - zIndex + 1)
+					{
+						xIndex = 0;
+						zIndex++;
+					}
+					else
+					{
+						xIndex = 0;
+					}
+					// we lose buildings here but its good enough for now
+					
 				}
-				
-				if (Mathematician.isEven(k))
-					i++;
 				else
-					j++;
-				k++;
+				{
+					System.out.println(String.format("Null building %d", ncount));
+					ncount++;
+					ntotal++;
+				}				
 			}
 		}	
 	}
@@ -95,11 +132,11 @@ public class ImprovedGridPlanner extends AbstractPlanner
 	{
 		ArrayList<Point> list = new ArrayList<Point>();
 		int size = (int) Math.ceil(Math.sqrt(numCells));
-		for (int i = 0; i < size; i++)
+		for (int x = 0; x < size; x++)
 		{
-			for (int j = 0; j < size; j++)
+			for (int y = 0; y < size; y++)
 			{
-				list.add(new Point(i*maxLength, j*maxLength));
+				list.add(new Point(x * maxLength + x, y * maxLength + y));
 			}
 		}
 		return list;
@@ -120,12 +157,8 @@ public class ImprovedGridPlanner extends AbstractPlanner
 	 * the right offsets in the master cell. In the 16x16 case the Cell offset returned by 
 	 * this method would be 4.
 	 * 
-	 * The list size should be guaranteed to be a power of 4
+	 * The list size should be guaranteed to be a power of 2
 	 */
-	private int getCellOffset(int listSize, int maxPower)
-	{
-		return (int)Math.pow(4, maxPower)/listSize;
-	}
 	
 	
 }

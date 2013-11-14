@@ -12,12 +12,11 @@ public class ImprovedGrid
 	public ArrayList<ArrayList<BuildingEntity>> generate(CityEntity cityEntity)
 	{
 
-		cityEntity.getBuildingEntries();
 		HashMap<Integer, ArrayList<BuildingEntity>> buildingSizes = new HashMap<Integer, ArrayList<BuildingEntity>>();
 		
 		for (BuildingEntity b: cityEntity.getBuildingEntries())
 		{
-			int power = Mathematician.get4thRoot(b.getBuildingData().getLength());
+			int power = Mathematician.ceilLog2((b.getBuildingData().getLength()));
 			if (!buildingSizes.containsKey(power))
 				buildingSizes.put(power, new ArrayList<BuildingEntity>());
 			ArrayList<BuildingEntity> list = buildingSizes.get(power);
@@ -27,16 +26,31 @@ public class ImprovedGrid
 		
 		ArrayList<ArrayList<BuildingEntity>> buildingList = new ArrayList<ArrayList<BuildingEntity>>();
 		
-		int maxPower = Mathematician.get4thRoot((cityEntity.getCityData().getMaxLength()));
+		int maxPower = Mathematician.ceilLog2((cityEntity.getCityData().getMaxLength()));
 		int elements = 0;
 		
 		for (int power: buildingSizes.keySet())
 		{
-			elements = (power == maxPower)? 1 : (int) Math.pow(4, (maxPower - power));
+			elements = getNumElements(maxPower, power);
 			buildingList.addAll(divideList(buildingSizes.get(power), elements));
 		}
 		
 		return buildingList;
+	}
+	
+	private int getNumElements(int maxPower, int power)
+	{
+		int elements = 0;
+		if (maxPower == power)
+			elements = 1;
+		else 
+		{
+			// this is to allow for building padding
+			elements = (int) ((Math.pow(2, maxPower)*Math.pow(2, maxPower))/ (Math.pow(2, power)*Math.pow(2, power)));
+			if (power < (maxPower / 2) + 1)
+				elements -= (int) (Math.pow(2, maxPower)/Math.pow(2, power)) * 2;
+		}
+		return elements;
 	}
 	
 	private ArrayList<ArrayList<BuildingEntity>> divideList(ArrayList<BuildingEntity> list, int n)
@@ -44,7 +58,12 @@ public class ImprovedGrid
 		ArrayList<ArrayList<BuildingEntity>> newList = new ArrayList<ArrayList<BuildingEntity>>();
 		
 		int i = 0;
-		for (i = 0; i < list.size(); i += n)
+		// floor power ensures there are no null buildings and each cell is full
+		// for this luxury we must sacrifice a few buildings, in some cases a lot.
+		int limit = Mathematician.floor2ndPower(list.size());
+		limit = (limit == 0)? 1 : limit; 
+		limit = list.size();
+		for (i = 0; i < limit; i += n)
 		{
 			ArrayList<BuildingEntity> subList = new ArrayList<BuildingEntity>();
 			for (int j = i; j < i + n; j++)
@@ -52,7 +71,7 @@ public class ImprovedGrid
 				if (j < list.size())
 					subList.add(list.get(j));
 				else
-					subList.add(new BuildingEntity(null, null, null)); // make sure to check for this later
+					break; // make sure to check for this later
 			}
 			newList.add(subList);
 		}

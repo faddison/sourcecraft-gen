@@ -6,9 +6,12 @@ import java.util.HashMap;
 import util.Mathematician;
 import core.BuildingEntity;
 import core.CityEntity;
+import designer.BuildingGenerator;
 
 public class ImprovedGrid 
 {	
+	BuildingGenerator buildingGenerator = new BuildingGenerator();
+	
 	public ArrayList<ArrayList<BuildingEntity>> generate(CityEntity cityEntity)
 	{
 
@@ -40,22 +43,17 @@ public class ImprovedGrid
 	
 	private int getNumElements(int maxPower, int power)
 	{
-		int elements = 0;
 		if (maxPower == power)
-			elements = 1;
+			return 1;
 		else 
-		{
-			// this is to allow for building padding
-			elements = (int) ((Math.pow(2, maxPower)*Math.pow(2, maxPower))/ (Math.pow(2, power)*Math.pow(2, power)));
-			if (power < (maxPower / 2) + 1)
-				elements -= (int) (Math.pow(2, maxPower)/Math.pow(2, power)) * 2;
-		}
-		return elements;
+			return (int) ((Math.pow(2, maxPower)*Math.pow(2, maxPower))/ (Math.pow(2, power)*Math.pow(2, power)));
+
 	}
 	
 	private ArrayList<ArrayList<BuildingEntity>> divideList(ArrayList<BuildingEntity> list, int n)
 	{
 		ArrayList<ArrayList<BuildingEntity>> newList = new ArrayList<ArrayList<BuildingEntity>>();
+		int length = Mathematician.ceil2ndPower(list.get(0).getBuildingData().getLength()) - 1;
 		
 		int i = 0;
 		// floor power ensures there are no null buildings and each cell is full
@@ -71,7 +69,8 @@ public class ImprovedGrid
 				if (j < list.size())
 					subList.add(list.get(j));
 				else
-					break; // make sure to check for this later
+					subList.add(buildingGenerator.generate(length, length, 37));
+					// make sure to check for this later
 			}
 			newList.add(subList);
 		}

@@ -1,7 +1,6 @@
 package designer;
 
-import core.BlockData;
-import core.BuildingData;
+import core.BlockConstants;
 
 public class BuildingDecorator {
 	
@@ -24,10 +23,10 @@ public class BuildingDecorator {
 		int blockRatio = bugSeverity*bugRatio;
 		blockCounter++;
 		if (blockCounter % blockRatio == 0) {
-			return BlockData.BRICK;
+			return BlockConstants.BRICK;
 		}
 		else {
-			return BlockData.STONE;
+			return BlockConstants.STONE;
 		}
 	}
 	

@@ -96,6 +96,8 @@ public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 			}
 		}
 		
+		buildingData.setBlocks(count);	
+		
 		return new BuildingEntity(c, blockEntries, buildingData);
 	}
 

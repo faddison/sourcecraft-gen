@@ -34,10 +34,10 @@ public class DesignerHelper
 	
 	public boolean isValidBuilding(SimpleClassMetrics c)
 	{
-		int minDimension = 2;
-		int maxDimension = 100;
-		int minHeight = 2;
-		int maxHeight = 100;
+		int minDimension = 1;
+		int maxDimension = 300;
+		int minHeight = 1;
+		int maxHeight = 300;
 		
 		return ((c.getNumAttributes() > minDimension) &&
 				(c.getNumAttributes() < maxDimension) &&

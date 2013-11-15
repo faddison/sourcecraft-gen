@@ -41,7 +41,6 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		ImprovedGrid grid = new ImprovedGrid();
 		
 		ArrayList<ArrayList<BuildingEntity>> buildingList = grid.generate(cityEntry);
-		//Collections.shuffle(buildingList);
 		
 		int maxLength = Mathematician.ceil2ndPower(cityEntry.getCityData().getMaxLength());
 		int maxPower = Mathematician.ceilLog2(cityEntry.getCityData().getMaxLength());
@@ -54,6 +53,8 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		int ncount = 1;
 		int ntotal = 1;
 		int btotal = 1;
+		
+		Collections.shuffle(buildingList);
 		for (int cellIndex = 0; cellIndex < buildingList.size(); cellIndex++)
 		{
 			ncount = 0;
@@ -71,6 +72,7 @@ public class ImprovedGridPlanner extends AbstractPlanner
 			// cell offset might be wrong and number of building in grid is off by 1
 			
 			// this loop alternates between incrementing i and j by checking if k is even
+			Collections.shuffle(list);
 			for (BuildingEntity building: list)
 			{
 				int xOffset = (xIndex * cellOffset);// + xIndex;

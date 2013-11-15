@@ -13,12 +13,14 @@ import metrics.SimpleClassMetrics;
 public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 {
 
-	private boolean scale = false;
+	private boolean scale = true;
+	Scaler scaler = new Scaler();
 	
 	@Override
 	public CityEntity design(ArrayList<SimpleClassMetrics> classMetricsList) 
 	{
 		classMetricsList = designerHelper.filterBuildingEntities(classMetricsList);
+		
 		ArrayList<BuildingEntity> buildingEntries = new ArrayList<BuildingEntity>();
 		CityData cityData = new CityData();
 		
@@ -30,8 +32,16 @@ public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 		{
 			System.out.println(String.format("Constructing building %s", count));
 			buildingEntries.add(createBuildingEntry(c));
-			maxLength = c.getNumAttributes() > maxLength? c.getNumAttributes() : maxLength;
-			maxHeight = c.getNumMethods() > maxHeight? c.getNumMethods() : maxHeight;
+			if (scale)
+			{
+				maxLength = (int) scaler.scale(c.getNumAttributes(), ScalerType.FACTOR) > maxLength? scaler.scale(c.getNumAttributes(), ScalerType.FACTOR) : maxLength;
+				maxHeight = (int) scaler.scale(c.getNumMethods(), ScalerType.FACTOR) > maxHeight? scaler.scale(c.getNumMethods(), ScalerType.FACTOR) : maxHeight;
+			}
+			else
+			{
+				maxLength = c.getNumAttributes() > maxLength? c.getNumAttributes() : maxLength;
+				maxHeight = c.getNumMethods() > maxHeight? c.getNumMethods() : maxHeight;
+			}
 			count++;
 		}
 		
@@ -53,8 +63,8 @@ public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 		
 		if (scale)
 		{
-			dimension = (int) Math.log(c.getNumAttributes()); 
-			height = (int) Math.log(c.getNumMethods()) + 1;
+			dimension = (int) scaler.scale(c.getNumAttributes(), ScalerType.FACTOR) + 1; 
+			height = (int) scaler.scale(c.getNumMethods(), ScalerType.FACTOR) + 1;
 		}
 		else
 		{

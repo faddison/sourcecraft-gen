@@ -17,7 +17,7 @@ public class Scaler
 	
 	private int factorScale(int n)
 	{
-		return (int) Math.ceil(n/5);
+		return (int) Math.ceil(n/2);
 	}
 	
 	private int logarithmicScale(int n)

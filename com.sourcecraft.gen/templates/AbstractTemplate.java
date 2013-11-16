@@ -4,7 +4,7 @@ import designer.AbstractDesigner;
 import metrics.AbstractMetrics;
 import metrics.SerializationWrapper;
 import parser.AbstractParser;
-import parser.ParseClassAndBugs;
+import parser.SimpleClassAndBugs;
 import planner.AbstractPlanner;
 
 public abstract class AbstractTemplate<T extends AbstractMetrics> {
@@ -13,7 +13,7 @@ public abstract class AbstractTemplate<T extends AbstractMetrics> {
 	protected AbstractPlanner planner;
 	protected AbstractMetrics metrics;
 	protected SerializationWrapper<T> serializationWrapper;
-	protected ParseClassAndBugs parser;
+	protected SimpleClassAndBugs parser;
 	
 	protected String metricsFilename;
 	protected String bugsFilename;

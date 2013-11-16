@@ -9,12 +9,9 @@ import mapper.MapGenerator;
 import metrics.MetricsDeserializer;
 import metrics.MetricsSerializer;
 import metrics.SerializationWrapper;
-import metrics.SimpleClassAndBugsMetrics;
 import metrics.SimpleClassMetrics;
 import designer.SimpleDesigner;
-import parser.ParseClassAndBugs;
-import parser.ParseClasses;
-import parser.SimpleClassParser;
+import parser.SimpleClassAndBugs;
 import planner.CityFileGenerator;
 import planner.ImprovedGridPlanner;
 
@@ -26,7 +23,7 @@ public class NewSimpleTemplate extends AbstractTemplate<SimpleClassMetrics> {
 		super();
 		designer = new SimpleDesigner();
 		planner = new ImprovedGridPlanner();
-		parser = new ParseClassAndBugs();
+		parser = new SimpleClassAndBugs();
 		serializationWrapper = new SerializationWrapper<SimpleClassMetrics>();
 		
 		metricsFilename = "metrics/simpleclassmetrics-list.list";

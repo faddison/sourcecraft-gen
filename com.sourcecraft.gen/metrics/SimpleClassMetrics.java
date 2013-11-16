@@ -14,6 +14,7 @@ public class SimpleClassMetrics extends AbstractMetrics
 	private int severity = 0;
 	private String className;
 	private String packageName;
+	private boolean hasBugs;
 	
 	public SimpleClassMetrics() {
 		
@@ -87,5 +88,13 @@ public class SimpleClassMetrics extends AbstractMetrics
 
 	public void setSeverity(int severity) {
 		this.severity = severity;
+	}
+	
+	public void setHasBugs(boolean hasBugs) {
+		this.hasBugs = hasBugs;
+	}
+	
+	public boolean hasBugs() {
+		return hasBugs;
 	}
 }

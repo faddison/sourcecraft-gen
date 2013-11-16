@@ -33,26 +33,15 @@ public class TorchDecorator extends AbstractDecorator {
 			BuildingData tempBuildingData =  buildingEnt.getBuildingData();
 			ArrayList<BlockEntity> blockEntities = buildingEnt.getBlockEntries();
 			
-			// Loop through every block in the building
-			for (BlockEntity be : blockEntities) {
-				
-				int x = be.getPoint().getX();
-				int y = be.getPoint().getY();
-				int z = be.getPoint().getZ();
-				
-				int length = tempBuildingData.getLength();
-				int width = tempBuildingData.getWidth();
-				int height = tempBuildingData.getHeight();
-				
-				// Place 
-				if (x == 0 && z == 0 && y == height ||
-					x == 0 && z == width && y == height ||
-					x == length && z == 0 && y == height ||
-					x == length && z == width && y == height) {
-					
-						blockEntities.add(new BlockEntity(new Point3D(x, y+1, z), new BlockData(BlockConstants.TORCH)));
-				}
-			}
+			int x = tempBuildingData.getLength();
+			int y = tempBuildingData.getHeight();
+			int z = tempBuildingData.getWidth();
+			
+			// Place one block on each corner on top of a building
+			blockEntities.add(new BlockEntity(new Point3D(0, y+1, 0), new BlockData(BlockConstants.TORCH)));
+			blockEntities.add(new BlockEntity(new Point3D(x, y+1, 0), new BlockData(BlockConstants.TORCH)));
+			blockEntities.add(new BlockEntity(new Point3D(0, y+1, z), new BlockData(BlockConstants.TORCH)));
+			blockEntities.add(new BlockEntity(new Point3D(x, y+1, z), new BlockData(BlockConstants.TORCH)));
 		}
 		
 		return newCityEntity;

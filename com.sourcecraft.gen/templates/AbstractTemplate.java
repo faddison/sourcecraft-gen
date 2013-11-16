@@ -10,6 +10,7 @@ public abstract class AbstractTemplate<T extends AbstractMetrics> {
 
 	protected AbstractDesigner<T> designer;
 	protected AbstractPlanner planner;
+	protected AbstractPlanner rails;
 	protected AbstractMetrics metrics;
 	protected SerializationWrapper<T> serializationWrapper;
 	protected AbstractParser<T> parser;

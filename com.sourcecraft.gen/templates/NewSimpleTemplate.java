@@ -1,5 +1,6 @@
 package templates;
 
+import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import designer.SimpleDesigner;
 import parser.SimpleClassParser;
 import planner.CityFileGenerator;
 import planner.ImprovedGridPlanner;
+import planner.RailwayPlanner;
 
 public class NewSimpleTemplate extends AbstractTemplate<SimpleClassMetrics> {
 	
@@ -23,6 +25,7 @@ public class NewSimpleTemplate extends AbstractTemplate<SimpleClassMetrics> {
 		super();
 		designer = new SimpleDesigner();
 		planner = new ImprovedGridPlanner();
+		rails = new RailwayPlanner();
 		serializationWrapper = new SerializationWrapper<SimpleClassMetrics>();
 		parser = new SimpleClassParser();
 		
@@ -63,6 +66,9 @@ public class NewSimpleTemplate extends AbstractTemplate<SimpleClassMetrics> {
 			//CityEntity cityEntity = designer.design(new ArrayList<SimpleClassMetrics>(metricsList.subList(100, 150)));
 			CityEntity cityEntity = designer.design(metricsList);
 			planner.plan(cityEntity, cityFilename);
+			ArrayList<Point> cellLocations = ((ImprovedGridPlanner) planner).getCellList();
+			int cellLength = ((ImprovedGridPlanner) planner).getCellLength();
+			//rails.setPaths(cityEntity, cityFilename, cellLocations, cellLength);
 			//(new MapGenerator()).map(cityFilename, mapFilename);
 			
 		} catch (Exception e) {

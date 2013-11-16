@@ -16,6 +16,7 @@ public class ImprovedGridPlanner extends AbstractPlanner
 
 	private static int total_blocks = 0;
 	public ArrayList<Point> cellLocations = new ArrayList<Point>();
+	public int cellLength = 0;
 	private BlockWriter blockWriter = new BlockWriter();
 	
 	
@@ -45,10 +46,12 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		
 		ArrayList<ArrayList<BuildingEntity>> buildingList = grid.generate(cityEntry);
 		
-		int maxLength = Mathematician.ceil2ndPower(cityEntry.getCityData().getMaxLength());
+		int maxLength = Mathematician.ceil2ndPower(cityEntry.getCityData().getMaxLength()) + 2;
+		// change made: added cell padding: 1 for redstone torches, 1 for shared railways and 1 for redstone torches of adjacent building
 		int maxPower = Mathematician.ceilLog2(cityEntry.getCityData().getMaxLength());
 		
 		ArrayList<Point> cellLocations = getCellLocations(maxLength, buildingList.size());
+		this.cellLength = maxLength;
 		// TODO: check if rail needs to be built around here as well
 		// maybe should think about connceting the rails together between buildings to ensure proper pathways
 
@@ -82,8 +85,8 @@ public class ImprovedGridPlanner extends AbstractPlanner
 			Collections.shuffle(list);
 			for (BuildingEntity building: list)
 			{
-				int xOffset = (xIndex * cellOffset);// + xIndex;
-				int zOffset = (zIndex * cellOffset);// + zIndex;
+				int xOffset = 1;//(xIndex * cellOffset);// + xIndex;
+				int zOffset = 1;//(zIndex * cellOffset);// + zIndex;
 						
 				int x = p.x + xOffset;
 				int z = p.y + zOffset;
@@ -218,6 +221,16 @@ public class ImprovedGridPlanner extends AbstractPlanner
 	 * 
 	 * The list size should be guaranteed to be a power of 2
 	 */
+	
+	public ArrayList<Point> getCellList()
+	{
+		return this.cellLocations;
+	}
+	
+	public int getCellLength()
+	{
+		return this.cellLength;
+	}
 	
 	
 }

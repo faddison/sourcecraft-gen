@@ -49,13 +49,11 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		int maxPower = Mathematician.ceilLog2(cityEntry.getCityData().getMaxLength());
 		
 		ArrayList<Point> cellLocations = getCellLocations(maxLength, buildingList.size());
-<<<<<<< HEAD
 		// TODO: check if rail needs to be built around here as well
 		// maybe should think about connceting the rails together between buildings to ensure proper pathways
-=======
+
 		this.cellLocations = cellLocations;
-		
->>>>>>> develop
+
 		ArrayList<BuildingEntity> lostBuildings = new ArrayList<BuildingEntity>();
 		
 		int bcount = 1;
@@ -99,14 +97,14 @@ public class ImprovedGridPlanner extends AbstractPlanner
 				if (building != null)
 				{
 					System.out.println(String.format("Writing building %d",bcount));
-<<<<<<< HEAD
+
 					placeBuildingBlocks(writer, building, x, 0, z);
 					// TODO: check if the x and/or z offset is larger or smaller than 0
 					placeRailway(writer, building, 0, 0, 0);
 					System.out.println(String.format("Railway for building %d complete", bcount));
-=======
+
 					blockWriter.placeBuildingBlocks(writer, building, x, 0, z);
->>>>>>> develop
+
 					bcount++;
 					btotal++;
 					

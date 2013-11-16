@@ -68,7 +68,7 @@ public class NewSimpleTemplate extends AbstractTemplate<SimpleClassMetrics> {
 			planner.plan(cityEntity, cityFilename);
 			ArrayList<Point> cellLocations = ((ImprovedGridPlanner) planner).getCellList();
 			int cellLength = ((ImprovedGridPlanner) planner).getCellLength();
-			//rails.setPaths(cityEntity, cityFilename, cellLocations, cellLength);
+			((RailwayPlanner) rails).setPaths(cityEntity, cityFilename, cellLocations, cellLength);
 			//(new MapGenerator()).map(cityFilename, mapFilename);
 			
 		} catch (Exception e) {

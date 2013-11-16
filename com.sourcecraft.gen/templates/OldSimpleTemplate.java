@@ -9,6 +9,7 @@ import metrics.MetricsSerializer;
 import metrics.SerializationWrapper;
 import metrics.SimpleClassMetrics;
 import designer.SimpleDesigner;
+import parser.ParseClassAndBugs;
 import parser.SimpleClassParser;
 import planner.CityFileGenerator;
 import planner.ImprovedGridPlanner;
@@ -22,7 +23,7 @@ public class OldSimpleTemplate extends AbstractTemplate {
 		designer = new SimpleDesigner();
 		planner = new ImprovedGridPlanner();
 		serializationWrapper = new SerializationWrapper<SimpleClassMetrics>();
-		parser = new SimpleClassParser();
+		parser = new ParseClassAndBugs();
 		
 		metricsFilename = "metrics/simpleclassmetrics-list.list";
 		sourceFilename = "sources/SweetHomeStructure.xml";
@@ -45,7 +46,7 @@ public class OldSimpleTemplate extends AbstractTemplate {
 		}
 		else
 		{
-			metricsList =  (ArrayList<SimpleClassMetrics>) parser.parse(sourceFilename);
+//			metricsList =  (ArrayList<SimpleClassMetrics>) parser.parse(sourceFilename);
 			serializationWrapper.serializer.serialize(metricsList, metricsFilename);
 		}
 			

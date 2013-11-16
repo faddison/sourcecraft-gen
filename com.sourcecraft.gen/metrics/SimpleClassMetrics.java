@@ -11,6 +11,7 @@ public class SimpleClassMetrics extends AbstractMetrics
 	private int numMethods;
 	private int numAttributes;
 	private int numLOC;
+	private int severity = 0;
 	private String className;
 	private String packageName;
 	
@@ -80,5 +81,11 @@ public class SimpleClassMetrics extends AbstractMetrics
 		this.attributeNames = attributeNames;
 	}
 
-	
+	public int getSeverity() {
+		return severity;
+	}
+
+	public void setSeverity(int severity) {
+		this.severity = severity;
+	}
 }

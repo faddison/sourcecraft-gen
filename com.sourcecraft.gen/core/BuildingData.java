@@ -42,13 +42,12 @@ public class BuildingData {
 	public void setBlocks(int blocks) {
 		this.blocks = blocks;
 	}
-
 	public int getBugSeverity() {
 		return bugSeverity;
 	}
-
 	public void setBugSeverity(int bugSeverity) {
 		this.bugSeverity = bugSeverity;
 	}
+	
 	
 }

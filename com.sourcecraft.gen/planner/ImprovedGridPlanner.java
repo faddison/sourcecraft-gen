@@ -103,7 +103,7 @@ public class ImprovedGridPlanner extends AbstractPlanner
 
 					placeBuildingBlocks(writer, building, x, 0, z);
 					// TODO: check if the x and/or z offset is larger or smaller than 0
-					placeRailway(writer, building, 0, 0, 0);
+					//placeRailway(writer, building, 0, 0, 0);
 					System.out.println(String.format("Railway for building %d complete", bcount));
 
 					blockWriter.placeBuildingBlocks(writer, building, x, 0, z);

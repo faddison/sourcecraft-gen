@@ -15,6 +15,9 @@ public class ImprovedGridPlanner extends AbstractPlanner
 {
 
 	private static int total_blocks = 0;
+	public ArrayList<Point> cellLocations = new ArrayList<Point>();
+	private BlockWriter blockWriter = new BlockWriter();
+	
 	
 	@Override
 	public String plan(CityEntity cityEntry, String filename) 
@@ -41,20 +44,26 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		ImprovedGrid grid = new ImprovedGrid();
 		
 		ArrayList<ArrayList<BuildingEntity>> buildingList = grid.generate(cityEntry);
-		Collections.shuffle(buildingList);
 		
 		int maxLength = Mathematician.ceil2ndPower(cityEntry.getCityData().getMaxLength());
 		int maxPower = Mathematician.ceilLog2(cityEntry.getCityData().getMaxLength());
 		
 		ArrayList<Point> cellLocations = getCellLocations(maxLength, buildingList.size());
+<<<<<<< HEAD
 		// TODO: check if rail needs to be built around here as well
 		// maybe should think about connceting the rails together between buildings to ensure proper pathways
+=======
+		this.cellLocations = cellLocations;
+		
+>>>>>>> develop
 		ArrayList<BuildingEntity> lostBuildings = new ArrayList<BuildingEntity>();
 		
 		int bcount = 1;
 		int ncount = 1;
 		int ntotal = 1;
 		int btotal = 1;
+		
+		Collections.shuffle(buildingList);
 		for (int cellIndex = 0; cellIndex < buildingList.size(); cellIndex++)
 		{
 			ncount = 0;
@@ -72,10 +81,11 @@ public class ImprovedGridPlanner extends AbstractPlanner
 			// cell offset might be wrong and number of building in grid is off by 1
 			
 			// this loop alternates between incrementing i and j by checking if k is even
+			Collections.shuffle(list);
 			for (BuildingEntity building: list)
 			{
-				int xOffset = (xIndex * cellOffset) + xIndex;
-				int zOffset = (zIndex * cellOffset) + zIndex;
+				int xOffset = (xIndex * cellOffset);// + xIndex;
+				int zOffset = (zIndex * cellOffset);// + zIndex;
 						
 				int x = p.x + xOffset;
 				int z = p.y + zOffset;
@@ -89,10 +99,14 @@ public class ImprovedGridPlanner extends AbstractPlanner
 				if (building != null)
 				{
 					System.out.println(String.format("Writing building %d",bcount));
+<<<<<<< HEAD
 					placeBuildingBlocks(writer, building, x, 0, z);
 					// TODO: check if the x and/or z offset is larger or smaller than 0
 					placeRailway(writer, building, 0, 0, 0);
 					System.out.println(String.format("Railway for building %d complete", bcount));
+=======
+					blockWriter.placeBuildingBlocks(writer, building, x, 0, z);
+>>>>>>> develop
 					bcount++;
 					btotal++;
 					

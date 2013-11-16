@@ -7,3 +7,5 @@ mcp/eclipse/.metadata/*
 *.log
 *.log.*
 bin/*
+cities/*
+maps/*

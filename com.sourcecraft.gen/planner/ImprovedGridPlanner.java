@@ -47,7 +47,8 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		int maxPower = Mathematician.ceilLog2(cityEntry.getCityData().getMaxLength());
 		
 		ArrayList<Point> cellLocations = getCellLocations(maxLength, buildingList.size());
-		
+		// TODO: check if rail needs to be built around here as well
+		// maybe should think about connceting the rails together between buildings to ensure proper pathways
 		ArrayList<BuildingEntity> lostBuildings = new ArrayList<BuildingEntity>();
 		
 		int bcount = 1;
@@ -89,6 +90,9 @@ public class ImprovedGridPlanner extends AbstractPlanner
 				{
 					System.out.println(String.format("Writing building %d",bcount));
 					placeBuildingBlocks(writer, building, x, 0, z);
+					// TODO: check if the x and/or z offset is larger or smaller than 0
+					placeRailway(writer, building, 0, 0, 0);
+					System.out.println(String.format("Railway for building %d complete", bcount));
 					bcount++;
 					btotal++;
 					
@@ -125,6 +129,49 @@ public class ImprovedGridPlanner extends AbstractPlanner
 			Point3D p = blockEntity.getPoint().translate(xOffset,  yOffset, zOffset);
 			//System.out.println(String.format("Placing block: %d, %d, %d", p.getX(), p.getY(), p.getZ()));
 			writer.print(String.format("%d %d %d %d\n", blockEntity.getBlockData().getId(), p.getX(), p.getY(), p.getZ()));	
+		}
+	}
+	
+	private void placeRailway(PrintWriter writer, BuildingEntity building, int xBorder, int yBorder, int zBOrder)
+	{
+		int maxX = -1;			// easy to override because we have no negative numbers
+		int maxZ = -1;			// easy to override because we have no negative numbers
+		int minX = 1000000000;  // easy to override
+		int minZ = 1000000000;  // easy to override
+		int floorHeight = 300;  // easy to override because limit is 256
+		int railID = 66; 		// rail has id 66, activator rail 157, powered rail 27, detector rail 28
+		for (BlockEntity blockEntity: building.getBlockEntries())
+		{
+			Point3D p = blockEntity.getPoint();
+			int currX = p.getX();
+			int currY = p.getY();
+			int currZ = p.getZ();
+			if (currX < minX)
+				minX = currX;
+			if (currZ < minZ)
+				minZ = currZ;
+			if (currX > maxX)
+				maxX = currX;
+			if (currZ > maxZ)
+				maxZ = currZ;
+			if (currY < floorHeight)
+				floorHeight = currY;
+		}
+		
+		// make a border around a building
+		minX += 1;
+		minZ += 1;
+		maxX += 1;
+		maxZ += 1;
+		
+		for (int x = minX; x <= maxX; x++)
+		{
+			for (int z = minX; z <= maxX; z++)
+			{
+				if (x == minX || x == maxX || z == minZ || z == maxZ){
+					writer.print(String.format("%d %d %d %d\n", railID, x, floorHeight, z));
+				}
+			}
 		}
 	}
 	

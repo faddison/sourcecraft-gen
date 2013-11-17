@@ -49,13 +49,11 @@ public class ParseClasses extends AbstractParser<SimpleClassMetrics> {
 			String pName = cp.getPackageName();
 			int methods = cp.getNumMethods();
 			int attributes = cp.getNumAttributes();
-			int severity = cp.getSeverity();
 			
 			System.out.println("Class name: " + name);
 			System.out.println("Package name: " + pName);
 			System.out.println("Number of methods: " + methods);
 			System.out.println("Number of attributes: " + attributes);
-			System.out.println("Severity: " + severity);
 			System.out.println();
 		}
 	}

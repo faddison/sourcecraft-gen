@@ -3,23 +3,24 @@ package core;
 import java.util.ArrayList;
 
 import metrics.AbstractMetrics;
+import metrics.SimpleClassMetrics;
 
 public class BuildingEntity implements Comparable<BuildingEntity>
 {
-	private AbstractMetrics metrics;
+	private SimpleClassMetrics metrics;
 	private ArrayList<BlockEntity> blockEntries;
 	private BuildingData buildingData;
-	public BuildingEntity(AbstractMetrics metrics,
+	public BuildingEntity(SimpleClassMetrics metrics,
 			ArrayList<BlockEntity> blockEntries, BuildingData buildingData) {
 		super();
 		this.metrics = metrics;
 		this.blockEntries = blockEntries;
 		this.buildingData = buildingData;
 	}
-	public AbstractMetrics getMetrics() {
+	public SimpleClassMetrics getMetrics() {
 		return metrics;
 	}
-	public void setMetrics(AbstractMetrics metrics) {
+	public void setMetrics(SimpleClassMetrics metrics) {
 		this.metrics = metrics;
 	}
 	public ArrayList<BlockEntity> getBlockEntries() {

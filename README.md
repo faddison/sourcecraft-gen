@@ -82,4 +82,4 @@ Tests
 
 ## Usage ##
 
-## Extending ##
+## Extension ##

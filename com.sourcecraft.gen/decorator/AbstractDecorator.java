@@ -7,6 +7,6 @@ import core.CityEntity;
 
 public abstract class AbstractDecorator {
 	
-	public abstract CityEntity decorate (CityEntity city);
+	public abstract CityEntity decorateCity (CityEntity city);
 
 }

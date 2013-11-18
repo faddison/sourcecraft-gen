@@ -18,6 +18,7 @@ public abstract class AbstractTemplate<T extends AbstractMetrics> {
 	protected String metricsFilename;
 	protected String sourceFilename;
 	protected String cityFilename;
+	protected String railFilename;
 	protected String mapFilename;
 	
 	public abstract void run();

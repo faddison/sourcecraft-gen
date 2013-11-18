@@ -38,7 +38,7 @@ public class RailwayPlanner extends AbstractPlanner
 		return null;
 	}
 	
-	public String setPaths(CityEntity cityEntry, String filename, ArrayList<Point> cellLocations, int cellLength)
+	public String setPaths(CityEntity cityEntry, String filename, ArrayList<Point> cellLocations, int cellLength)//, BlockWriter writer)
 	{
 		try
 		{

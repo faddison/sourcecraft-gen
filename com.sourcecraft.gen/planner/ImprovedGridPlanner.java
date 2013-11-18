@@ -232,5 +232,10 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		return this.cellLength;
 	}
 	
+	public BlockWriter getWriter()
+	{
+		return this.blockWriter;
+	}
+	
 	
 }

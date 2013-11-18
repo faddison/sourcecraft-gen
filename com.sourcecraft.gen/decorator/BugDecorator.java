@@ -33,14 +33,14 @@ public class BugDecorator extends AbstractDecorator {
 			
 			// Starts decorating methods from the bottom of the building
 			for (int i = 0; i < decorateList.size(); i++) {
-				decorateMethod(blocks, i, decorateList.get(i).getBugType());
+				decorateMethod(blocks, i, decorateList.get(i));
 			}
 		}
 		
 		return cityEntity;
 	}
 	
-	// Creates a list methods to decorate in each BuildingData object
+	// Creates a list of methods to decorate in each BuildingData object
 	// If the same method has several bugs, only the worst bug is added to the list
 	
 	private void createDecorationLists (CityEntity city) {
@@ -71,33 +71,33 @@ public class BugDecorator extends AbstractDecorator {
 	
 	// Changes the blockData of blocks that are in the height y
 	
-	private void decorateMethod (ArrayList<BlockEntity> blocks, int y, int bugType) {
+	private void decorateMethod (ArrayList<BlockEntity> blocks, int y, BugData bugData) {
 		
 		for (BlockEntity blockEntity : blocks) {
 			
 			if (blockEntity.getPoint().getY() == y) {
 				
-				if (bugType == BugConstants.STYLE) {
+				if (bugData.getBugType() == BugConstants.STYLE) {
 					BlockData newBlockData = new BlockData(BlockConstants.BRICK);
 					blockEntity.setBlockData(newBlockData);
 				}
-				else if (bugType == BugConstants.BAD_PRACTICE) {
+				else if (bugData.getBugType() == BugConstants.BAD_PRACTICE) {
 					BlockData newBlockData = new BlockData(BlockConstants.DIRT);
 					blockEntity.setBlockData(newBlockData);
 				}
-				else if (bugType == BugConstants.CORRECTNESS) {
+				else if (bugData.getBugType() == BugConstants.CORRECTNESS) {
 					BlockData newBlockData = new BlockData(BlockConstants.DIRT);
 					blockEntity.setBlockData(newBlockData);
 				}
-				else if (bugType == BugConstants.EXPERIMENTAL) {
+				else if (bugData.getBugType() == BugConstants.EXPERIMENTAL) {
 					BlockData newBlockData = new BlockData(BlockConstants.DIRT);
 					blockEntity.setBlockData(newBlockData);
 				}
-				else if (bugType == BugConstants.MALICIOUS_CODE) {
+				else if (bugData.getBugType() == BugConstants.MALICIOUS_CODE) {
 					BlockData newBlockData = new BlockData(BlockConstants.DIRT);
 					blockEntity.setBlockData(newBlockData);
 				}
-				else if (bugType == BugConstants.PERFORMANCE) {
+				else if (bugData.getBugType() == BugConstants.PERFORMANCE) {
 					BlockData newBlockData = new BlockData(BlockConstants.DIRT);
 					blockEntity.setBlockData(newBlockData);
 				}

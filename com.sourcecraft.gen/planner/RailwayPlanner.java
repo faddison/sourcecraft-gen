@@ -65,6 +65,8 @@ public class RailwayPlanner extends AbstractPlanner
 		int railID = 27; 		// rail has id 66, activator rail 157, powered rail 27, detector rail 28
 		int torchID = 76;		// redstone torch is 76 for on, 75 for off
 		// 41: gold; 57: diamond
+		int wallHeight = 4;
+		int wallID = 45;		// brick wall ID = 45
 		
 		for (Point p: cellLocations){
 			int currX = p.x;
@@ -114,21 +116,19 @@ public class RailwayPlanner extends AbstractPlanner
 			}
 		}
 		// for generating a wall instead of a grid around the city
-//		int wallHeight = 10;
-//		int wallID = 45;		// brick wall ID
-//		for (int x = minX; x <= maxX; x++)
-//		{
-//			for (int z = minZ; z <= maxZ; z++)
-//			{
-//				for (int y = 0; y <= wallHeight; y++)
-//				{
-//					if(x == minX || x == (int) maxX / cellLength || z == minZ || z == (int) maxZ / cellLength)
-//						{
-//						writer.print(String.format("%d %d %d %d\n", wallID, x, y, z));
-//						}
-//				}
-//			}
-//		}
+		for (int x = minX - 3; x <= finalX + 1 + cellLength; x++)
+		{
+			for (int z = minZ - 3; z <= finalZ + 1 + cellLength; z++)
+			{
+				for (int y = 0; y <= wallHeight; y++)
+				{
+					if(x == minX - 3 || x == finalX + 1 + cellLength|| z == minZ - 3 || z == finalZ + 1 + cellLength)
+						{
+						writer.print(String.format("%d %d %d %d\n", wallID, x, y, z));
+						}
+				}
+			}
+		}
 	}
 	
 	

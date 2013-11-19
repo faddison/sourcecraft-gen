@@ -78,17 +78,17 @@ public class RailwayPlanner extends AbstractPlanner
 				maxZ = currZ;
 		}
 		
+		int xQuotient = maxX / cellLength;
+		int zQuotient = maxZ / cellLength;
+		int finalX = (xQuotient + 1) * cellLength;
+		int finalZ = (zQuotient + 1) * cellLength;
 		
-		for (int x = minX; x <= maxX + cellLength; x++)
+		for (int x = minX; x <= finalX + cellLength; x++)
 		{
-			for (int z = minZ; z <= maxZ + cellLength; z++)
+			for (int z = minZ; z <= finalZ + cellLength; z++)
 			{
 				int xJump = x % cellLength;
 				int zJump = z % cellLength;
-				int xQuotient = maxX / cellLength;
-				int zQuotient = maxZ / cellLength;
-				int finalX = (xQuotient + 1) * cellLength;
-				int finalZ = (zQuotient + 1) * cellLength;
 				
 
 				if ( xJump == 0 || zJump == 0 ){

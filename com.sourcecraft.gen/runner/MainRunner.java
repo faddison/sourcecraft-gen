@@ -1,6 +1,7 @@
 package runner;
 
 import templates.AbstractTemplate;
+import templates.NewRailTemplate;
 import templates.NewSimpleTemplate;
 import templates.OldSimpleTemplate;
 
@@ -17,7 +18,8 @@ public class MainRunner {
 			AbstractTemplate template;
 			
 			//template = new OldSimpleTemplate();
-			template = new NewSimpleTemplate();
+			//template = new NewSimpleTemplate();
+			template = new NewRailTemplate();
 					
 			template.run();
 			

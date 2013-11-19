@@ -62,8 +62,8 @@ public class RailwayPlanner extends AbstractPlanner
 		int maxZ = -1;			// easy to override because we have no negative numbers
 		int minX = 1000000000;  // easy to override
 		int minZ = 1000000000;  // easy to override
-		int railID = 27; 		// rail has id 66, activator rail 157, powered rail 27, detector rail 28
-		int torchID = 76;		// redstone torch is 76 for on, 75 for off
+		int railID = 9; 		// rail has id 66, activator rail 157, powered rail 27, detector rail 28
+		int torchID = 11;		// redstone torch is 76 for on, 75 for off
 		
 		for (Point p: cellLocations){
 			int currX = p.x;

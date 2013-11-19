@@ -18,20 +18,22 @@ import planner.CityFileGenerator;
 import planner.ImprovedGridPlanner;
 import planner.RailwayPlanner;
 
-public class NewSimpleTemplate extends AbstractTemplate<SimpleClassMetrics> {
+public class NewRailTemplate extends AbstractTemplate<SimpleClassMetrics> {
 	
 	
-	public NewSimpleTemplate()
+	public NewRailTemplate()
 	{
 		super();
 		designer = new SimpleDesigner();
 		planner = new ImprovedGridPlanner();
+		rails = new RailwayPlanner();
 		serializationWrapper = new SerializationWrapper<SimpleClassMetrics>();
 		parser = new SimpleClassParser();
 		
 		metricsFilename = "metrics/simpleclassmetrics-list.list";
 		sourceFilename = "sources/SweetHomeStructure.xml";
 		cityFilename = "cities/box-new.txt";
+		railFilename = "cities/rail-box.txt";
 		mapFilename = "maps/map-new.txt";
 	}
 
@@ -66,6 +68,9 @@ public class NewSimpleTemplate extends AbstractTemplate<SimpleClassMetrics> {
 			//CityEntity cityEntity = designer.design(new ArrayList<SimpleClassMetrics>(metricsList.subList(100, 150)));
 			CityEntity cityEntity = designer.design(metricsList);
 			planner.plan(cityEntity, cityFilename);
+			ArrayList<Point> cellLocations = ((ImprovedGridPlanner) planner).getCellList();
+			int cellLength = ((ImprovedGridPlanner) planner).getCellLength();
+			((RailwayPlanner) rails).setPaths(cityEntity, railFilename, cellLocations, cellLength);//, writer);
 			//(new MapGenerator()).map(cityFilename, mapFilename);
 			
 		} catch (Exception e) {

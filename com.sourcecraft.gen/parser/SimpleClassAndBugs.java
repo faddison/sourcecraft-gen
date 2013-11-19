@@ -25,9 +25,17 @@ public class SimpleClassAndBugs {
 		ParseBugs pb = new ParseBugs();
 		ArrayList<SimpleBugsMetrics> bugs = pb.parse(bugfile);
 
-		printBugs(bugs);
+//		printBugs(bugs);
 		
 		return classes;
+	}
+	
+	public static ArrayList<SimpleBugsMetrics> parseForBugs(String bugfile) {
+		
+		ParseBugs pb = new ParseBugs();
+		ArrayList<SimpleBugsMetrics> bugs = pb.parse(bugfile);
+		
+		return bugs;
 	}
 	
 	private static void printBugs(ArrayList<SimpleBugsMetrics> bugs) {

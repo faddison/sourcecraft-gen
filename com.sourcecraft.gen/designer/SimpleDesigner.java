@@ -75,6 +75,7 @@ public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 		buildingData.setHeight(height);
 		buildingData.setLength(dimension+1);
 		buildingData.setWidth(dimension+1);
+//		buildingData.setBugSeverity(c.getSeverity());
 
 			//make each block based on attributes, x starting at x going downwards and z going to the right
 		int count = 0;
@@ -87,15 +88,15 @@ public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 				{
 					if (designerHelper.shouldSetBlock(x, y, z, 0, 0, height, dimension))
 					{
-						blockEntries.add(new BlockEntity(new Point3D(x,y,z),new BlockData(1)));
-						count++;
+							blockEntries.add(new BlockEntity(new Point3D(x,y,z),new BlockData(1)));
+							count++;
+
 					}
-						
 				}
 			}
 		}
 		
-		buildingData.setBlocks(count);
+		buildingData.setBlocks(count);	
 		
 		return new BuildingEntity(c, blockEntries, buildingData);
 	}

@@ -15,6 +15,9 @@ public class ImprovedGridPlanner extends AbstractPlanner
 {
 
 	private static int total_blocks = 0;
+	public ArrayList<Point> cellLocations = new ArrayList<Point>();
+	private BlockWriter blockWriter = new BlockWriter();
+	
 	
 	@Override
 	public String plan(CityEntity cityEntry, String filename) 
@@ -46,6 +49,7 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		int maxPower = Mathematician.ceilLog2(cityEntry.getCityData().getMaxLength());
 		
 		ArrayList<Point> cellLocations = getCellLocations(maxLength, buildingList.size());
+		this.cellLocations = cellLocations;
 		
 		ArrayList<BuildingEntity> lostBuildings = new ArrayList<BuildingEntity>();
 		
@@ -90,7 +94,7 @@ public class ImprovedGridPlanner extends AbstractPlanner
 				if (building != null)
 				{
 					System.out.println(String.format("Writing building %d",bcount));
-					placeBuildingBlocks(writer, building, x, 0, z);
+					blockWriter.placeBuildingBlocks(writer, building, x, 0, z);
 					bcount++;
 					btotal++;
 					

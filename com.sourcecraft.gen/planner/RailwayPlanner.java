@@ -62,8 +62,9 @@ public class RailwayPlanner extends AbstractPlanner
 		int maxZ = -1;			// easy to override because we have no negative numbers
 		int minX = 1000000000;  // easy to override
 		int minZ = 1000000000;  // easy to override
-		int railID = 41; 		// rail has id 66, activator rail 157, powered rail 27, detector rail 28
-		int torchID = 57;		// redstone torch is 76 for on, 75 for off
+		int railID = 27; 		// rail has id 66, activator rail 157, powered rail 27, detector rail 28
+		int torchID = 76;		// redstone torch is 76 for on, 75 for off
+		// 41: gold; 57: diamond
 		
 		for (Point p: cellLocations){
 			int currX = p.x;
@@ -83,6 +84,7 @@ public class RailwayPlanner extends AbstractPlanner
 		int finalX = (xQuotient + 1) * cellLength;
 		int finalZ = (zQuotient + 1) * cellLength;
 		
+		// generate torches
 		for (int x = minX; x <= finalX + cellLength; x++)
 		{
 			for (int z = minZ; z <= finalZ + cellLength; z++)
@@ -93,8 +95,21 @@ public class RailwayPlanner extends AbstractPlanner
 
 				if ( xJump == 0 || zJump == 0 ){
 					writer.print(String.format("%d %d %d %d\n", torchID, x - 2, 0, z - 2));
-					writer.print(String.format("%d %d %d %d\n", railID, x - 1, 0, z - 1));
 					writer.print(String.format("%d %d %d %d\n", torchID, x , 0, z));
+				}
+			}
+		}
+		// generate rails
+		for (int x = minX; x <= finalX + cellLength; x++)
+		{
+			for (int z = minZ; z <= finalZ + cellLength; z++)
+			{
+				int xJump = x % cellLength;
+				int zJump = z % cellLength;
+				
+
+				if ( xJump == 0 || zJump == 0 ){
+					writer.print(String.format("%d %d %d %d\n", railID, x - 1, 0, z - 1));
 				}
 			}
 		}

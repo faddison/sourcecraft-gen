@@ -58,6 +58,11 @@ public class SimpleBugsMetrics extends AbstractMetrics {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
+	public int getSeverity() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 }

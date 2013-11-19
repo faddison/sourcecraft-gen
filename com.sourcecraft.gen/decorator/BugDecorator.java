@@ -2,8 +2,8 @@ package decorator;
 
 import java.util.ArrayList;
 
+import metrics.SimpleBugsMetrics;
 import metrics.SimpleClassMetrics;
-
 import core.BlockConstants;
 import core.BlockData;
 import core.BlockEntity;
@@ -48,7 +48,7 @@ public class BugDecorator extends AbstractDecorator {
 		ArrayList<BuildingEntity> buildingEntries = city.getBuildingEntries();
 		
 		// Get city bugs list
-		ArrayList<SimpleBugsMetrics> bugsList = city.getBugsList();
+		ArrayList<SimpleBugsMetrics> bugsList = new ArrayList<SimpleBugsMetrics>(); //city.getBugsList();
 		
 		for(SimpleBugsMetrics bug : bugsList) {
 			
@@ -57,10 +57,10 @@ public class BugDecorator extends AbstractDecorator {
 				SimpleClassMetrics scm = buildingEntity.getMetrics();
 				
 				// Match every bug to a BuildingEntity, and then add it the DecorateList
-				if (bug.getClassName.equals(scm.getClassName())) {
+				if (bug.getClassName().equals(scm.getClassName())) {
 					BuildingData buildingData = buildingEntity.getBuildingData();
 					
-					int bugRating = BugConstants.setBugRating(bug.getCategory);
+					int bugRating = BugConstants.setBugRating(bug.getCategory());
 					BugData tempBug = new BugData(bugRating, bug.getSeverity(), bug.getMethodName());
 					buildingData.addToDecorateList(tempBug);
 				}

@@ -6,11 +6,8 @@ import java.util.List;
 public class SimpleClassMetrics extends AbstractMetrics
 {
 
-	private List<String> methodNames;
-	private List<String> attributeNames;
 	private int numMethods;
 	private int numAttributes;
-	private int numLOC;
 	private String className;
 	private String packageName;
 	
@@ -40,14 +37,6 @@ public class SimpleClassMetrics extends AbstractMetrics
 		this.numAttributes = numAttributes;
 	}
 
-	public int getNumLOC() {
-		return numLOC;
-	}
-
-	public void setNumLOC(int numLOC) {
-		this.numLOC = numLOC;
-	}
-
 	public String getClassName() {
 		return className;
 	}
@@ -63,22 +52,5 @@ public class SimpleClassMetrics extends AbstractMetrics
 	public void setPackageName(String packageName) {
 		this.packageName = packageName;
 	}
-	
-	public List<String> getMethodNames() {
-		return methodNames;
-	}
 
-	public void setMethodNames(List<String> methodNames) {
-		this.methodNames = methodNames;
-	}
-
-	public List<String> getAttributeNames() {
-		return attributeNames;
-	}
-
-	public void setAttributeNames(List<String> attributeNames) {
-		this.attributeNames = attributeNames;
-	}
-
-	
 }

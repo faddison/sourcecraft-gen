@@ -60,10 +60,10 @@ public class BugDecorator extends AbstractDecorator {
 			}
 //			System.out.println("");
 		}
-//		System.out.println("");
-//		System.out.println("total decorated blocks: " + decoratedBlocks);
-//		System.out.println("total decorated methods: " + decoratedMethods);
-//		System.out.println("methods without names: " + methodsWithoutNames);
+		System.out.println("");
+		System.out.println("total decorated blocks: " + decoratedBlocks);
+		System.out.println("total decorated methods: " + decoratedMethods);
+		System.out.println("methods without names: " + methodsWithoutNames);
 //		System.out.println("");
 //		System.out.println("bugs replace with worse ones: " + bugReplaceWithWorse);
 //		System.out.println("bugs equally bad: " + bugEquallyBad);

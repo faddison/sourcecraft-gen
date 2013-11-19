@@ -5,12 +5,12 @@ package decorator;
 public class BugData {
 
 	private int bugType;
-	private int bugSeverity;
+	private int bugPriority;
 	private String methodName;
 	
-	public BugData (int bugType, int bugSeverity, String methodName) {
+	public BugData (int bugType, int bugPriority, String methodName) {
 		this.bugType = bugType;
-		this.bugSeverity = bugSeverity;
+		this.bugPriority = bugPriority;
 		this.methodName = methodName;
 	}
 	
@@ -20,17 +20,20 @@ public class BugData {
 	public void setBugType(int bugType) {
 		this.bugType = bugType;
 	}
-	public int getBugSeverity() {
-		return bugSeverity;
+	public int getBugPriority() {
+		return bugPriority;
 	}
-	public void setBugSeverity(int bugSeverity) {
-		this.bugSeverity = bugSeverity;
+	public void setBugPriority(int bugPriority) {
+		this.bugPriority = bugPriority;
 	}
 	public String getMethodName() {
 		return methodName;
 	}
 	public void setMethodName(String methodName) {
 		this.methodName = methodName;
+	}
+	public String toString() {
+		return "bugtype: " + this.bugType + " methodName: " + this.methodName;
 	}
 	
 	

@@ -1,5 +1,6 @@
 package templates;
 
+import decorator.AbstractDecorator;
 import designer.AbstractDesigner;
 import metrics.AbstractMetrics;
 import metrics.SerializationWrapper;
@@ -14,6 +15,7 @@ public abstract class AbstractTemplate<T extends AbstractMetrics> {
 	protected AbstractMetrics metrics;
 	protected SerializationWrapper<T> serializationWrapper;
 	protected SimpleClassAndBugs parser;
+	protected AbstractDecorator decorator;
 	
 	protected String metricsFilename;
 	protected String bugsFilename;

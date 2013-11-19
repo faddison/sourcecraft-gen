@@ -12,45 +12,73 @@ import core.BuildingEntity;
 import core.CityEntity;
 
 public class BugDecorator extends AbstractDecorator {
+	
+	// USED FOR DEBUGGING
+	private int decoratedBlocks = 0;
+	private int decoratedMethods = 0;
+	public static int methodsWithoutNames = 0;
+	
+	public static int bugReplaceWithWorse = 0;
+	public static int bugEquallyBad = 0;
+	public static int bugLessBad = 0;
 
-	// Should decorate the enitre city
+	public BugDecorator() {
+		
+	}
+	
+	// Should decorate the entire city
+	// Probably change to void
 	
 	@Override
-	public CityEntity decorateCity (CityEntity city) {
+	public CityEntity decorateCity (CityEntity city, ArrayList<SimpleBugsMetrics> bugList) {
 		
 		// Copy old city data
-		CityEntity cityEntity = new CityEntity();
-		city.setBuildingEntries(city.getBuildingEntries());
-		city.setCityData(city.getCityData());
+//		CityEntity cityEntity = new CityEntity();
+//		city.setBuildingEntries(city.getBuildingEntries());
+//		city.setCityData(city.getCityData());
 		
-		createDecorationLists(cityEntity);
-		ArrayList<BuildingEntity> buildingEntity = cityEntity.getBuildingEntries();
+		createDecorationLists(city, bugList);
+		ArrayList<BuildingEntity> buildingEntity = city.getBuildingEntries();
 		
 		for (BuildingEntity be : buildingEntity) {
 			BuildingData buildingData = be.getBuildingData();
 			ArrayList<BlockEntity> blocks = be.getBlockEntries();
 			ArrayList<BugData> decorateList = buildingData.getDecorateList();
 			
+			if (decorateList.isEmpty()) {
+				continue;
+			}
+			
 			// Starts decorating methods from the bottom of the building
 			for (int i = 0; i < decorateList.size(); i++) {
+				
+//				System.out.println("Decorating: " + decorateList.get(i).getMethodName() + " in class " + be.getMetrics().getClassName());
+				
 				decorateMethod(blocks, i, decorateList.get(i));
+				decoratedMethods++;
 			}
+//			System.out.println("");
 		}
+		System.out.println("");
+		System.out.println("total decorated blocks: " + decoratedBlocks);
+		System.out.println("total decorated methods: " + decoratedMethods);
+		System.out.println("methods without names: " + methodsWithoutNames);
+//		System.out.println("");
+//		System.out.println("bugs replace with worse ones: " + bugReplaceWithWorse);
+//		System.out.println("bugs equally bad: " + bugEquallyBad);
+//		System.out.println("bug less bad: " + bugLessBad);
 		
-		return cityEntity;
+		return city;
 	}
 	
 	// Creates a list of methods to decorate in each BuildingData object
 	// If the same method has several bugs, only the worst bug is added to the list
 	
-	private void createDecorationLists (CityEntity city) {
+	private void createDecorationLists (CityEntity city, ArrayList<SimpleBugsMetrics> bugList) {
 		
 		ArrayList<BuildingEntity> buildingEntries = city.getBuildingEntries();
-		
-		// Get city bugs list
-		ArrayList<SimpleBugsMetrics> bugsList = new ArrayList<SimpleBugsMetrics>(); //city.getBugsList();
-		
-		for(SimpleBugsMetrics bug : bugsList) {
+
+		for(SimpleBugsMetrics bug : bugList) {
 			
 			for (BuildingEntity buildingEntity : buildingEntries) {
 				
@@ -61,7 +89,8 @@ public class BugDecorator extends AbstractDecorator {
 					BuildingData buildingData = buildingEntity.getBuildingData();
 					
 					int bugRating = BugConstants.setBugRating(bug.getCategory());
-					BugData tempBug = new BugData(bugRating, bug.getSeverity(), bug.getMethodName());
+					BugData tempBug = new BugData(bugRating, bug.getPriority(), bug.getMethodName());
+					
 					buildingData.addToDecorateList(tempBug);
 				}
 			}
@@ -80,26 +109,32 @@ public class BugDecorator extends AbstractDecorator {
 				if (bugData.getBugType() == BugConstants.STYLE) {
 					BlockData newBlockData = new BlockData(BlockConstants.BRICK);
 					blockEntity.setBlockData(newBlockData);
+					decoratedBlocks++;
 				}
 				else if (bugData.getBugType() == BugConstants.BAD_PRACTICE) {
 					BlockData newBlockData = new BlockData(BlockConstants.DIRT);
 					blockEntity.setBlockData(newBlockData);
+					decoratedBlocks++;
 				}
 				else if (bugData.getBugType() == BugConstants.CORRECTNESS) {
-					BlockData newBlockData = new BlockData(BlockConstants.DIRT);
+					BlockData newBlockData = new BlockData(BlockConstants.COBBLESTONE);
 					blockEntity.setBlockData(newBlockData);
+					decoratedBlocks++;
 				}
 				else if (bugData.getBugType() == BugConstants.EXPERIMENTAL) {
-					BlockData newBlockData = new BlockData(BlockConstants.DIRT);
+					BlockData newBlockData = new BlockData(BlockConstants.SAND);
 					blockEntity.setBlockData(newBlockData);
+					decoratedBlocks++;
 				}
 				else if (bugData.getBugType() == BugConstants.MALICIOUS_CODE) {
-					BlockData newBlockData = new BlockData(BlockConstants.DIRT);
+					BlockData newBlockData = new BlockData(BlockConstants.LAVA);
 					blockEntity.setBlockData(newBlockData);
+					decoratedBlocks++;
 				}
 				else if (bugData.getBugType() == BugConstants.PERFORMANCE) {
 					BlockData newBlockData = new BlockData(BlockConstants.DIRT);
 					blockEntity.setBlockData(newBlockData);
+					decoratedBlocks++;
 				}
 			}
 		}

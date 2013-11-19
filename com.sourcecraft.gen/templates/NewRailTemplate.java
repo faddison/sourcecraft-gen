@@ -71,7 +71,7 @@ public class NewRailTemplate extends AbstractTemplate<SimpleClassMetrics> {
 			ArrayList<Point> cellLocations = ((ImprovedGridPlanner) planner).getCellList();
 			int cellLength = ((ImprovedGridPlanner) planner).getCellLength();
 			((RailwayPlanner) rails).setPaths(cityEntity, railFilename, cellLocations, cellLength);//, writer);
-			//(new MapGenerator()).map(cityFilename, mapFilename);
+			(new MapGenerator()).map(cityFilename, mapFilename);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

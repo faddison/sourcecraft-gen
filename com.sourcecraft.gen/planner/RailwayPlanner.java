@@ -62,8 +62,8 @@ public class RailwayPlanner extends AbstractPlanner
 		int maxZ = -1;			// easy to override because we have no negative numbers
 		int minX = 1000000000;  // easy to override
 		int minZ = 1000000000;  // easy to override
-		int railID = 9; 		// rail has id 66, activator rail 157, powered rail 27, detector rail 28
-		int torchID = 11;		// redstone torch is 76 for on, 75 for off
+		int railID = 41; 		// rail has id 66, activator rail 157, powered rail 27, detector rail 28
+		int torchID = 57;		// redstone torch is 76 for on, 75 for off
 		
 		for (Point p: cellLocations){
 			int currX = p.x;
@@ -79,19 +79,41 @@ public class RailwayPlanner extends AbstractPlanner
 		}
 		
 		
-		for (int x = minX; x <= maxX; x++)
+		for (int x = minX; x <= maxX + cellLength; x++)
 		{
-			for (int z = minX; z <= maxX; z++)
+			for (int z = minZ; z <= maxZ + cellLength; z++)
 			{
 				int xJump = x % cellLength;
 				int zJump = z % cellLength;
-				if (x == minX || x == maxX || z == minZ || z == maxZ || xJump == 0 || zJump == 0){
-					writer.print(String.format("%d %d %d %d\n", torchID, x - 1, 4, z - 1));
-					writer.print(String.format("%d %d %d %d\n", railID, x, 4, z));
-					writer.print(String.format("%d %d %d %d\n", torchID, x + 1, 4, z + 1));
+				int xQuotient = maxX / cellLength;
+				int zQuotient = maxZ / cellLength;
+				int finalX = (xQuotient + 1) * cellLength;
+				int finalZ = (zQuotient + 1) * cellLength;
+				
+
+				if ( xJump == 0 || zJump == 0 ){
+					writer.print(String.format("%d %d %d %d\n", torchID, x - 2, 0, z - 2));
+					writer.print(String.format("%d %d %d %d\n", railID, x - 1, 0, z - 1));
+					writer.print(String.format("%d %d %d %d\n", torchID, x , 0, z));
 				}
 			}
 		}
+		// for generating a wall instead of a grid around the city
+//		int wallHeight = 10;
+//		int wallID = 45;		// brick wall ID
+//		for (int x = minX; x <= maxX; x++)
+//		{
+//			for (int z = minZ; z <= maxZ; z++)
+//			{
+//				for (int y = 0; y <= wallHeight; y++)
+//				{
+//					if(x == minX || x == (int) maxX / cellLength || z == minZ || z == (int) maxZ / cellLength)
+//						{
+//						writer.print(String.format("%d %d %d %d\n", wallID, x, y, z));
+//						}
+//				}
+//			}
+//		}
 	}
 	
 	

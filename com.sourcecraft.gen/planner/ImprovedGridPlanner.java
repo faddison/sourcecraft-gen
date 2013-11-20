@@ -16,6 +16,7 @@ public class ImprovedGridPlanner extends AbstractPlanner
 
 	private static int total_blocks = 0;
 	public ArrayList<Point> cellLocations = new ArrayList<Point>();
+	public int cellLength = 0;
 	private BlockWriter blockWriter = new BlockWriter();
 	
 	
@@ -45,12 +46,17 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		
 		ArrayList<ArrayList<BuildingEntity>> buildingList = grid.generate(cityEntry);
 		
-		int maxLength = Mathematician.ceil2ndPower(cityEntry.getCityData().getMaxLength());
+		int maxLength = Mathematician.ceil2ndPower(cityEntry.getCityData().getMaxLength()) + 2;
+		// change made: added cell padding: 1 for redstone torches, 1 for shared railways and 1 for redstone torches of adjacent building
 		int maxPower = Mathematician.ceilLog2(cityEntry.getCityData().getMaxLength());
 		
 		ArrayList<Point> cellLocations = getCellLocations(maxLength, buildingList.size());
+		this.cellLength = maxLength;
+		// TODO: check if rail needs to be built around here as well
+		// maybe should think about connceting the rails together between buildings to ensure proper pathways
+
 		this.cellLocations = cellLocations;
-		
+
 		ArrayList<BuildingEntity> lostBuildings = new ArrayList<BuildingEntity>();
 		
 		int bcount = 1;
@@ -82,8 +88,8 @@ public class ImprovedGridPlanner extends AbstractPlanner
 				int xOffset = (xIndex * cellOffset);// + xIndex;
 				int zOffset = (zIndex * cellOffset);// + zIndex;
 						
-				int x = p.x + xOffset;
-				int z = p.y + zOffset;
+				int x = p.x + xOffset + 1;
+				int z = p.y + zOffset + 1;
 				
 				
 				// add padding to inside of cells
@@ -94,7 +100,12 @@ public class ImprovedGridPlanner extends AbstractPlanner
 				if (building != null)
 				{
 					System.out.println(String.format("Writing building %d",bcount));
+
+					placeBuildingBlocks(writer, building, x, 0, z);
+					// TODO: check if the x and/or z offset is larger or smaller than 0
+
 					blockWriter.placeBuildingBlocks(writer, building, x, 0, z);
+
 					bcount++;
 					btotal++;
 					
@@ -165,6 +176,21 @@ public class ImprovedGridPlanner extends AbstractPlanner
 	 * 
 	 * The list size should be guaranteed to be a power of 2
 	 */
+	
+	public ArrayList<Point> getCellList()
+	{
+		return this.cellLocations;
+	}
+	
+	public int getCellLength()
+	{
+		return this.cellLength;
+	}
+	
+	public BlockWriter getWriter()
+	{
+		return this.blockWriter;
+	}
 	
 	
 }

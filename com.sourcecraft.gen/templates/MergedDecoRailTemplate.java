@@ -83,7 +83,7 @@ public class MergedDecoRailTemplate extends AbstractTemplate<SimpleClassMetrics>
 			int cellLength = ((ImprovedGridPlanner) planner).getCellLength();
 			((RailwayPlanner) rails).setPaths(cityEntity, railFilename, cellLocations, cellLength);//, writer);
 
-			(new MapGenerator()).map(cityFilename, mapFilename);
+			//(new MapGenerator()).map(cityFilename, mapFilename);
 //			System.out.println("simpleBugsList size: " + simpleBugsList.size());
 			
 			decorator.decorateCity(cityEntity, simpleBugsList);

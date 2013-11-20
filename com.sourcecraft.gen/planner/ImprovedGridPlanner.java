@@ -85,11 +85,11 @@ public class ImprovedGridPlanner extends AbstractPlanner
 			Collections.shuffle(list);
 			for (BuildingEntity building: list)
 			{
-				int xOffset = 1;//(xIndex * cellOffset);// + xIndex;
-				int zOffset = 1;//(zIndex * cellOffset);// + zIndex;
+				int xOffset = (xIndex * cellOffset);// + xIndex;
+				int zOffset = (zIndex * cellOffset);// + zIndex;
 						
-				int x = p.x + xOffset;
-				int z = p.y + zOffset;
+				int x = p.x + xOffset + 1;
+				int z = p.y + zOffset + 1;
 				
 				
 				// add padding to inside of cells
@@ -103,8 +103,6 @@ public class ImprovedGridPlanner extends AbstractPlanner
 
 					placeBuildingBlocks(writer, building, x, 0, z);
 					// TODO: check if the x and/or z offset is larger or smaller than 0
-					//placeRailway(writer, building, 0, 0, 0);
-					//System.out.println(String.format(" building %d complete", bcount));
 
 					blockWriter.placeBuildingBlocks(writer, building, x, 0, z);
 
@@ -147,49 +145,6 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		}
 	}
 	
-//	private void placeRailway(PrintWriter writer, BuildingEntity building, int xBorder, int yBorder, int zBOrder)
-//	{
-//		int maxX = -1;			// easy to override because we have no negative numbers
-//		int maxZ = -1;			// easy to override because we have no negative numbers
-//		int minX = 1000000000;  // easy to override
-//		int minZ = 1000000000;  // easy to override
-//		int floorHeight = 300;  // easy to override because limit is 256
-//		int railID = 66; 		// rail has id 66, activator rail 157, powered rail 27, detector rail 28
-//		for (BlockEntity blockEntity: building.getBlockEntries())
-//		{
-//			Point3D p = blockEntity.getPoint();
-//			int currX = p.getX();
-//			int currY = p.getY();
-//			int currZ = p.getZ();
-//			if (currX < minX)
-//				minX = currX;
-//			if (currZ < minZ)
-//				minZ = currZ;
-//			if (currX > maxX)
-//				maxX = currX;
-//			if (currZ > maxZ)
-//				maxZ = currZ;
-//			if (currY < floorHeight)
-//				floorHeight = currY;
-//		}
-//		
-//		// make a border around a building
-//		minX += 1;
-//		minZ += 1;
-//		maxX += 1;
-//		maxZ += 1;
-//		
-//		for (int x = minX; x <= maxX; x++)
-//		{
-//			for (int z = minX; z <= maxX; z++)
-//			{
-//				if (x == minX || x == maxX || z == minZ || z == maxZ){
-//					writer.print(String.format("%d %d %d %d\n", railID, x, floorHeight, z));
-//				}
-//			}
-//		}
-//	}
-//	
 	private ArrayList<Point> getCellLocations(int maxLength, int numCells)
 	{
 		ArrayList<Point> list = new ArrayList<Point>();

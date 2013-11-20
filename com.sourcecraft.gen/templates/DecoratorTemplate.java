@@ -9,22 +9,25 @@ import mapper.MapGenerator;
 import metrics.MetricsDeserializer;
 import metrics.MetricsSerializer;
 import metrics.SerializationWrapper;
+import metrics.SimpleBugsMetrics;
 import metrics.SimpleClassMetrics;
+import decorator.BugDecorator;
 import designer.SimpleDesigner;
 import parser.SimpleClassAndBugs;
 import planner.CityFileGenerator;
 import planner.ImprovedGridPlanner;
 
-public class NewSimpleTemplate extends AbstractTemplate<SimpleClassMetrics> {
+public class DecoratorTemplate extends AbstractTemplate<SimpleClassMetrics> {
 	
 	
-	public NewSimpleTemplate()
+	public DecoratorTemplate()
 	{
 		super();
 		designer = new SimpleDesigner();
 		planner = new ImprovedGridPlanner();
 		parser = new SimpleClassAndBugs();
 		serializationWrapper = new SerializationWrapper<SimpleClassMetrics>();
+		decorator = new BugDecorator();
 		
 		metricsFilename = "metrics/simpleclassmetrics-list.list";
 		sourceFilename = "sources/SweetHomeStructure.xml";
@@ -49,6 +52,9 @@ public class NewSimpleTemplate extends AbstractTemplate<SimpleClassMetrics> {
 
 			ArrayList<SimpleClassMetrics> metricsList = new ArrayList<SimpleClassMetrics>();
 			metricsList =  parser.startParsing(sourceFilename, bugsFilename);
+			
+			ArrayList<SimpleBugsMetrics> simpleBugsList = new ArrayList<SimpleBugsMetrics>();
+			simpleBugsList = parser.parseForBugs(bugsFilename);
 
 			/* ***COME BACK TO THIS
 			 * having problems with the serializable stuff below
@@ -70,6 +76,9 @@ public class NewSimpleTemplate extends AbstractTemplate<SimpleClassMetrics> {
 			CityEntity cityEntity = designer.design(metricsList);
 			planner.plan(cityEntity, cityFilename);
 			(new MapGenerator()).map(cityFilename, mapFilename);
+//			System.out.println("simpleBugsList size: " + simpleBugsList.size());
+			
+			decorator.decorateCity(cityEntity, simpleBugsList);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

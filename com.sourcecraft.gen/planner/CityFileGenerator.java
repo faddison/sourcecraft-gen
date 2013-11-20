@@ -104,7 +104,7 @@ public class CityFileGenerator
 		// counter will keep track of how many buildings we've built so far
 		int counter = 0;
 		
-		int cellPadding = 2;
+		int cellPadding = 10;
 
 		// builds out the grid then builds structs in each one
 		for (int i = 0; i < gridSide; i += cellSize + cellPadding) 

@@ -2,6 +2,7 @@ package core;
 
 public class BlockData
 {
+	
 	private int id;
 
 	public BlockData(int id) {

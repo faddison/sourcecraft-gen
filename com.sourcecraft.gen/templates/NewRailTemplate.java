@@ -28,7 +28,7 @@ public class NewRailTemplate extends AbstractTemplate<SimpleClassMetrics> {
 		planner = new ImprovedGridPlanner();
 		rails = new RailwayPlanner();
 		serializationWrapper = new SerializationWrapper<SimpleClassMetrics>();
-		parser = new SimpleClassParser();
+		//parser = new SimpleClassParser();
 		
 		metricsFilename = "metrics/simpleclassmetrics-list.list";
 		sourceFilename = "sources/SweetHomeStructure.xml";
@@ -60,7 +60,7 @@ public class NewRailTemplate extends AbstractTemplate<SimpleClassMetrics> {
 			}
 			else
 			{
-				metricsList =  (ArrayList<SimpleClassMetrics>) parser.parse(sourceFilename);
+//				metricsList =  (ArrayList<SimpleClassMetrics>) parser.parse(sourceFilename);
 				serializationWrapper.serializer.serialize(metricsList, metricsFilename);
 			}
 				
@@ -68,9 +68,9 @@ public class NewRailTemplate extends AbstractTemplate<SimpleClassMetrics> {
 			//CityEntity cityEntity = designer.design(new ArrayList<SimpleClassMetrics>(metricsList.subList(100, 150)));
 			CityEntity cityEntity = designer.design(metricsList);
 			planner.plan(cityEntity, cityFilename);
-			ArrayList<Point> cellLocations = ((ImprovedGridPlanner) planner).getCellList();
-			int cellLength = ((ImprovedGridPlanner) planner).getCellLength();
-			((RailwayPlanner) rails).setPaths(cityEntity, railFilename, cellLocations, cellLength);//, writer);
+//			ArrayList<Point> cellLocations = ((ImprovedGridPlanner) planner).getCellList();
+//			int cellLength = ((ImprovedGridPlanner) planner).getCellLength();
+//			((RailwayPlanner) rails).setPaths(cityEntity, railFilename, cellLocations, cellLength);//, writer);
 			(new MapGenerator()).map(cityFilename, mapFilename);
 			
 		} catch (Exception e) {

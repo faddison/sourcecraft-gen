@@ -64,16 +64,16 @@ public class MergedDecoRailTemplate extends AbstractTemplate<SimpleClassMetrics>
 			 * having problems with the serializable stuff below
 			 * java.io.InvalidClassException: metrics.SimpleClassMetrics; local class incompatible: stream classdesc serialVersionUID = -4063490111111282074, local class serialVersionUID = -3790282589782583307
 			 */
-//			file = new File(metricsFilename);
-//			if (file.exists())
-//			{
-//				metricsList = serializationWrapper.deserializer.deserialize(metricsFilename);
-//			}
-//			else
-//			{
-////				metricsList =  (ArrayList<SimpleClassMetrics>) parser.startParsing(sourceFilename, bugsFilename);
-//				serializationWrapper.serializer.serialize(metricsList, metricsFilename);
-//			}
+			file = new File(metricsFilename);
+			if (file.exists())
+			{
+				metricsList = serializationWrapper.deserializer.deserialize(metricsFilename);
+			}
+			else
+			{
+//				metricsList =  (ArrayList<SimpleClassMetrics>) parser.startParsing(sourceFilename, bugsFilename);
+				serializationWrapper.serializer.serialize(metricsList, metricsFilename);
+			}
 				
 			//
 			//CityEntity cityEntity = designer.design(new ArrayList<SimpleClassMetrics>(metricsList.subList(100, 150)));

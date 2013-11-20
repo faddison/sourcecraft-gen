@@ -50,12 +50,13 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		// change made: added cell padding: 1 for redstone torches, 1 for shared railways and 1 for redstone torches of adjacent building
 		int maxPower = Mathematician.ceilLog2(cityEntry.getCityData().getMaxLength());
 		
-		ArrayList<Point> cellLocations = getCellLocations(maxLength, buildingList.size());
 		this.cellLength = maxLength;
+		this. cellLocations = getCellLocations(maxLength, buildingList.size());
+		
 		// TODO: check if rail needs to be built around here as well
 		// maybe should think about connceting the rails together between buildings to ensure proper pathways
 
-		this.cellLocations = cellLocations;
+		cellLocations = getCellLocations(maxLength - 1, buildingList.size());;
 
 		ArrayList<BuildingEntity> lostBuildings = new ArrayList<BuildingEntity>();
 		

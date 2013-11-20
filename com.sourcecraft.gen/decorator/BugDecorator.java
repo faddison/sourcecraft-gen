@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import metrics.SimpleBugsMetrics;
 import metrics.SimpleClassMetrics;
+
 import core.BlockConstants;
 import core.BlockData;
 import core.BlockEntity;
@@ -27,15 +28,9 @@ public class BugDecorator extends AbstractDecorator {
 	}
 	
 	// Should decorate the entire city
-	// Probably change to void
 	
 	@Override
 	public CityEntity decorateCity (CityEntity city, ArrayList<SimpleBugsMetrics> bugList) {
-		
-		// Copy old city data
-//		CityEntity cityEntity = new CityEntity();
-//		city.setBuildingEntries(city.getBuildingEntries());
-//		city.setCityData(city.getCityData());
 		
 		createDecorationLists(city, bugList);
 		ArrayList<BuildingEntity> buildingEntity = city.getBuildingEntries();
@@ -54,7 +49,7 @@ public class BugDecorator extends AbstractDecorator {
 				
 //				System.out.println("Decorating: " + decorateList.get(i).getMethodName() + " in class " + be.getMetrics().getClassName());
 				
-				decorateMethod(blocks, i, decorateList.get(i));
+				decorateMethod(blocks, i+1, decorateList.get(i));
 				decoratedMethods++;
 			}
 //			System.out.println("");
@@ -107,32 +102,32 @@ public class BugDecorator extends AbstractDecorator {
 			if (blockEntity.getPoint().getY() == y) {
 				
 				if (bugData.getBugType() == BugConstants.STYLE) {
-					BlockData newBlockData = new BlockData(BlockConstants.BRICK);
+					BlockData newBlockData = new BlockData(BlockConstants.GOLD);
 					blockEntity.setBlockData(newBlockData);
 					decoratedBlocks++;
 				}
 				else if (bugData.getBugType() == BugConstants.BAD_PRACTICE) {
-					BlockData newBlockData = new BlockData(BlockConstants.DIRT);
+					BlockData newBlockData = new BlockData(BlockConstants.MUSHROOM);
 					blockEntity.setBlockData(newBlockData);
 					decoratedBlocks++;
 				}
 				else if (bugData.getBugType() == BugConstants.CORRECTNESS) {
-					BlockData newBlockData = new BlockData(BlockConstants.COBBLESTONE);
+					BlockData newBlockData = new BlockData(BlockConstants.DIAMOND);
 					blockEntity.setBlockData(newBlockData);
 					decoratedBlocks++;
 				}
 				else if (bugData.getBugType() == BugConstants.EXPERIMENTAL) {
-					BlockData newBlockData = new BlockData(BlockConstants.SAND);
+					BlockData newBlockData = new BlockData(BlockConstants.COAL);
 					blockEntity.setBlockData(newBlockData);
 					decoratedBlocks++;
 				}
 				else if (bugData.getBugType() == BugConstants.MALICIOUS_CODE) {
-					BlockData newBlockData = new BlockData(BlockConstants.LAVA);
+					BlockData newBlockData = new BlockData(BlockConstants.EMERALD);
 					blockEntity.setBlockData(newBlockData);
 					decoratedBlocks++;
 				}
 				else if (bugData.getBugType() == BugConstants.PERFORMANCE) {
-					BlockData newBlockData = new BlockData(BlockConstants.DIRT);
+					BlockData newBlockData = new BlockData(BlockConstants.PORTAL);
 					blockEntity.setBlockData(newBlockData);
 					decoratedBlocks++;
 				}

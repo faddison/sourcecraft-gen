@@ -2,6 +2,7 @@ package runner;
 
 import templates.AbstractTemplate;
 import templates.DecoratorTemplate;
+import templates.MergedDecoRailTemplate;
 import templates.NewSimpleTemplate;
 import templates.OldSimpleTemplate;
 
@@ -18,7 +19,9 @@ public class MainRunner {
 			AbstractTemplate template;
 			
 			//template = new OldSimpleTemplate();
-			template = new DecoratorTemplate();
+			//template = new DecoratorTemplate();
+			//template = new NewRailTemplate();
+			template = new MergedDecoRailTemplate();
 					
 			template.run();
 			

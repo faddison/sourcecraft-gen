@@ -90,9 +90,9 @@ public class RailwayPlanner extends AbstractPlanner
 		int finalZ = (zQuotient + 1) * railJump;
 
 		// generate torches
-		for (int x = minX; x <= finalX; x++)
+		for (int x = minX; x <= finalX + railJump; x++)
 		{
-			for (int z = minZ; z <= finalZ; z++)
+			for (int z = minZ; z <= finalZ + railJump; z++)
 			{
 				int xJump = x % railJump;
 				int zJump = z % railJump;
@@ -105,9 +105,9 @@ public class RailwayPlanner extends AbstractPlanner
 			}
 		}
 		// generate rails at non-intersections
-		for (int x = minX; x <= finalX; x++)
+		for (int x = minX; x <= finalX + railJump; x++)
 		{
-			for (int z = minZ; z <= finalZ; z++)
+			for (int z = minZ; z <= finalZ + railJump; z++)
 			{
 				int xJump = x % railJump;
 				int zJump = z % railJump;
@@ -120,18 +120,26 @@ public class RailwayPlanner extends AbstractPlanner
 			}
 		}
 		// generate rails at non-central intersections
-				for (int x = minX; x <= finalX; x++)
+				for (int x = minX; x <= finalX + railJump; x++)
 				{
-					for (int z = minZ; z <= finalZ; z++)
+					for (int z = minZ; z <= finalZ + railJump; z++)
 					{
 						int xJump = x % railJump;
 						int zJump = z % railJump;
 
 
-						if ( xJump == 0 && zJump == 0 && (x == minX || x == finalX || z == minZ || z == finalZ)){
+						if ( xJump == 0 && zJump == 0 && (x == minX || x == finalX + railJump || z == minZ || z == finalZ + railJump)){
+							
+							if (x != finalX + railJump)
+								writer.print(String.format("%d %d %d %d\n", railID, x, 0, z - 1));
+							if (z != minZ)
+								writer.print(String.format("%d %d %d %d\n", railID, x - 1, 0, z - 2));
+							if (x != minX)
+								writer.print(String.format("%d %d %d %d\n", railID, x - 2, 0, z - 1));
+							if (x != finalZ + railJump)
+								writer.print(String.format("%d %d %d %d\n", railID, x - 1, 0, z));
+							
 							writer.print(String.format("%d %d %d %d\n", iRailID, x - 1, 0, z - 1));
-							writer.print(String.format("%d %d %d %d\n", railID, x, 0, z - 1));
-							writer.print(String.format("%d %d %d %d\n", railID, x - 1, 0, z - 2));
 							
 							
 						}
@@ -142,13 +150,13 @@ public class RailwayPlanner extends AbstractPlanner
 		
 
 		// for generating a wall instead of a grid around the city
-		for (int x = minX - 3; x <= finalX + 1; x++)
+		for (int x = minX - 3; x <= finalX + railJump + 1; x++)
 		{
-			for (int z = minZ - 3; z <= finalZ + 1; z++)
+			for (int z = minZ - 3; z <= finalZ + railJump + 1; z++)
 			{
 				for (int y = 0; y <= wallHeight; y++)
 				{
-					if(x == minX - 3 || x == finalX + 1|| z == minZ - 3 || z == finalZ + 1)
+					if(x == minX - 3 || x == finalX + railJump + 1|| z == minZ - 3 || z == finalZ + railJump + 1)
 					{
 						writer.print(String.format("%d %d %d %d\n", wallID, x, y, z));
 					}
@@ -156,15 +164,15 @@ public class RailwayPlanner extends AbstractPlanner
 			}
 		}
 		// generate rail system at intersections
-				for (int x = minX; x <= finalX; x++)
+				for (int x = minX; x <= finalX + railJump; x++)
 				{
-					for (int z = minZ; z <= finalZ; z++)
+					for (int z = minZ; z <= finalZ + railJump; z++)
 					{
 						int xJump = x % railJump;
 						int zJump = z % railJump;
 
 
-						if ( x != minX && x != finalX && z != minZ && z!= finalZ && xJump == 0 && zJump == 0 ){
+						if ( x != minX && x != finalX + railJump && z != minZ && z!= finalZ + railJump && xJump == 0 && zJump == 0 ){
 							int centreX = x - 1;
 							int centreZ = z - 1;
 							// upper levels for X

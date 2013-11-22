@@ -18,12 +18,12 @@ public class ImprovedGridPlanner extends AbstractPlanner
 	public ArrayList<Point> cellLocations = new ArrayList<Point>();
 	public int cellLength = 0;
 	private BlockWriter blockWriter = new BlockWriter();
-	
-	
+
+
 	@Override
 	public String plan(CityEntity cityEntry, String filename) 
 	{
-		
+
 		try 
 		{
 			PrintWriter writer;
@@ -31,72 +31,72 @@ public class ImprovedGridPlanner extends AbstractPlanner
 			buildPlans(writer, cityEntry);
 			writer.close();
 			System.out.println(String.format("lines : %d", total_blocks));
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
-	
+
 	private void buildPlans(PrintWriter writer, CityEntity cityEntry)
 	{
 		ImprovedGrid grid = new ImprovedGrid();
-		
+
 		ArrayList<ArrayList<BuildingEntity>> buildingList = grid.generate(cityEntry);
-		
-		int maxLength = Mathematician.ceil2ndPower(cityEntry.getCityData().getMaxLength()) + 2;
-		// change made: added cell padding: 1 for redstone torches, 1 for shared railways and 1 for redstone torches of adjacent building
+
+		int maxLength = Mathematician.ceil2ndPower(cityEntry.getCityData().getMaxLength());
+		// change needed: added cell padding: 1 for redstone torches, 1 for shared railways and 1 for redstone torches of adjacent building
 		int maxPower = Mathematician.ceilLog2(cityEntry.getCityData().getMaxLength());
-		
+
 		this.cellLength = maxLength;
-		this. cellLocations = getCellLocations(maxLength, buildingList.size());
-		
+		this.cellLocations = getCellLocations(maxLength, buildingList.size(), 1);
+
 		// TODO: check if rail needs to be built around here as well
 		// maybe should think about connceting the rails together between buildings to ensure proper pathways
 
-		cellLocations = getCellLocations(maxLength - 1, buildingList.size());;
+		ArrayList<Point> cellLocation = getCellLocations(maxLength, buildingList.size(), 3);
 
 		ArrayList<BuildingEntity> lostBuildings = new ArrayList<BuildingEntity>();
-		
+
 		int bcount = 1;
 		int ncount = 1;
 		int ntotal = 1;
 		int btotal = 1;
-		
+
 		Collections.shuffle(buildingList);
 		for (int cellIndex = 0; cellIndex < buildingList.size(); cellIndex++)
 		{
 			ncount = 0;
 			bcount = 0;
-			Point p = cellLocations.get(cellIndex);
+			Point p = cellLocation.get(cellIndex);
 			ArrayList<BuildingEntity> list = buildingList.get(cellIndex);
 			int power = Mathematician.ceilLog2(list.get(0).getBuildingData().getLength());
 			int cellOffset = (int) Math.pow(2,power);
-			
+
 			int xIndex = 0;
 			int zIndex = 0;
 			int xPadding = 0;
 			int zPadding = 0;
-			
+
 			// cell offset might be wrong and number of building in grid is off by 1
-			
+
 			// this loop alternates between incrementing i and j by checking if k is even
 			Collections.shuffle(list);
 			for (BuildingEntity building: list)
 			{
-				int xOffset = (xIndex * cellOffset);// + xIndex;
-				int zOffset = (zIndex * cellOffset);// + zIndex;
-						
+				int xOffset = (xIndex * cellOffset);
+				int zOffset = (zIndex * cellOffset);
+
 				int x = p.x + xOffset + 1;
 				int z = p.y + zOffset + 1;
-				
-				
+
+
 				// add padding to inside of cells
 				// limit the number of buildings in each cell by counting the columns
 				// and rows to account for padding
-							
+
 				// sometimes we put null buildings inside, just for fun
 				if (building != null)
 				{
@@ -105,12 +105,18 @@ public class ImprovedGridPlanner extends AbstractPlanner
 					placeBuildingBlocks(writer, building, x, 0, z);
 					// TODO: check if the x and/or z offset is larger or smaller than 0
 
-					blockWriter.placeBuildingBlocks(writer, building, x, 0, z);
+
+					if (building.getMetrics() != null) {
+
+						String className = building.getMetrics().getClassName();
+						blockWriter.placeSigns(writer, building, x, 0, z, className);
+					}
+
 
 					bcount++;
 					btotal++;
-					
-					if (xOffset < maxLength - cellOffset - xIndex + 1)
+
+					if (xOffset < maxLength - cellOffset - xIndex - 1)
 					{
 						xIndex++;
 					}
@@ -124,7 +130,7 @@ public class ImprovedGridPlanner extends AbstractPlanner
 						xIndex = 0;
 					}
 					// we lose buildings here but its good enough for now
-					
+
 				}
 				else
 				{
@@ -135,7 +141,7 @@ public class ImprovedGridPlanner extends AbstractPlanner
 			}
 		}	
 	}
-	
+
 	private void placeBuildingBlocks(PrintWriter writer, BuildingEntity building, int xOffset, int yOffset, int zOffset)
 	{
 		for (BlockEntity blockEntity: building.getBlockEntries())
@@ -145,8 +151,8 @@ public class ImprovedGridPlanner extends AbstractPlanner
 			writer.print(String.format("%d %d %d %d\n", blockEntity.getBlockData().getId(), p.getX(), p.getY(), p.getZ()));	
 		}
 	}
-	
-	private ArrayList<Point> getCellLocations(int maxLength, int numCells)
+
+	private ArrayList<Point> getCellLocations(int maxLength, int numCells, int padding)
 	{
 		ArrayList<Point> list = new ArrayList<Point>();
 		int size = (int) Math.ceil(Math.sqrt(numCells));
@@ -154,17 +160,17 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		{
 			for (int y = 0; y < size; y++)
 			{
-				list.add(new Point(x * maxLength + x, y * maxLength + y));
+				list.add(new Point(x * (maxLength + padding), y * (maxLength + padding)));
 			}
 		}
 		return list;
 	}
-	
+
 	private ArrayList<Point> getCellLocationsSpiral(int maxLength, int numCells)
 	{
 		return new ArrayList<Point>();
 	}
-	
+
 	/*
 	 * Given the size of the list and the maximum power of 4 determine where to place
 	 * smaller buildings within the full size of the cell. The max power corresponds 
@@ -177,21 +183,21 @@ public class ImprovedGridPlanner extends AbstractPlanner
 	 * 
 	 * The list size should be guaranteed to be a power of 2
 	 */
-	
+
 	public ArrayList<Point> getCellList()
 	{
 		return this.cellLocations;
 	}
-	
+
 	public int getCellLength()
 	{
 		return this.cellLength;
 	}
-	
+
 	public BlockWriter getWriter()
 	{
 		return this.blockWriter;
 	}
-	
-	
+
+
 }

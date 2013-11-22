@@ -65,9 +65,11 @@ public class RailwayPlanner extends AbstractPlanner
 		int railID = 27; 		// rail has id 66, activator rail 157, powered rail 27, detector rail 28
 		int torchID = 76;		// redstone torch is 76 for on, 75 for off
 		// 41: gold; 57: diamond
+		int iRailID = 66;
 		int wallHeight = 4;
 		int wallID = 45;		// brick wall ID = 45
-		int railJump = cellLength;
+		int railJump = cellLength + 3;
+		int groundID = 3; 		// 2 for grass, 3 for dirt
 
 		for (Point p: cellLocations){
 			int currX = p.x;
@@ -88,9 +90,9 @@ public class RailwayPlanner extends AbstractPlanner
 		int finalZ = (zQuotient + 1) * railJump;
 
 		// generate torches
-		for (int x = minX; x <= finalX + railJump; x++)
+		for (int x = minX; x <= finalX; x++)
 		{
-			for (int z = minZ; z <= finalZ + railJump; z++)
+			for (int z = minZ; z <= finalZ; z++)
 			{
 				int xJump = x % railJump;
 				int zJump = z % railJump;
@@ -99,14 +101,10 @@ public class RailwayPlanner extends AbstractPlanner
 				if ( xJump == 0 || zJump == 0 ){
 					writer.print(String.format("%d %d %d %d\n", torchID, x - 2, 0, z - 2));
 					writer.print(String.format("%d %d %d %d\n", torchID, x , 0, z));
-					for (int y=1; y < 253; y++){
-						writer.print(String.format("%d %d %d %d\n", 0, x - 1, y, z - 1));
-					}
-
 				}
 			}
 		}
-		// generate rails
+		// generate rails at non-intersections
 		for (int x = minX; x <= finalX; x++)
 		{
 			for (int z = minZ; z <= finalZ; z++)
@@ -117,12 +115,32 @@ public class RailwayPlanner extends AbstractPlanner
 
 				if ( xJump == 0 || zJump == 0 ){
 					writer.print(String.format("%d %d %d %d\n", railID, x - 1, 0, z - 1));
-					for (int y=1; y < 253; y++){
-						writer.print(String.format("%d %d %d %d\n", 0, x - 1, y, z - 1));
-					}
 				}
+				
 			}
 		}
+		// generate rails at non-central intersections
+				for (int x = minX; x <= finalX; x++)
+				{
+					for (int z = minZ; z <= finalZ; z++)
+					{
+						int xJump = x % railJump;
+						int zJump = z % railJump;
+
+
+						if ( xJump == 0 && zJump == 0 && (x == minX || x == finalX || z == minZ || z == finalZ)){
+							writer.print(String.format("%d %d %d %d\n", iRailID, x - 1, 0, z - 1));
+							writer.print(String.format("%d %d %d %d\n", railID, x, 0, z - 1));
+							writer.print(String.format("%d %d %d %d\n", railID, x - 1, 0, z - 2));
+							
+							
+						}
+						
+					}
+				}
+		
+		
+
 		// for generating a wall instead of a grid around the city
 		for (int x = minX - 3; x <= finalX + 1; x++)
 		{
@@ -130,13 +148,67 @@ public class RailwayPlanner extends AbstractPlanner
 			{
 				for (int y = 0; y <= wallHeight; y++)
 				{
-					if(x == minX - 3 || x == finalX + 1 + railJump|| z == minZ - 3 || z == finalZ + 1 + railJump)
+					if(x == minX - 3 || x == finalX + 1|| z == minZ - 3 || z == finalZ + 1)
 					{
 						writer.print(String.format("%d %d %d %d\n", wallID, x, y, z));
 					}
 				}
 			}
 		}
+		// generate rail system at intersections
+				for (int x = minX; x <= finalX; x++)
+				{
+					for (int z = minZ; z <= finalZ; z++)
+					{
+						int xJump = x % railJump;
+						int zJump = z % railJump;
+
+
+						if ( x != minX && x != finalX && z != minZ && z!= finalZ && xJump == 0 && zJump == 0 ){
+							int centreX = x - 1;
+							int centreZ = z - 1;
+							// upper levels for X
+							writer.print(String.format("%d %d %d %d\n", groundID, centreX - 3, 0, centreZ));
+							writer.print(String.format("%d %d %d %d\n", groundID, centreX - 2, 0, centreZ));
+							writer.print(String.format("%d %d %d %d\n", groundID, centreX - 1, 0, centreZ));
+							writer.print(String.format("%d %d %d %d\n", groundID, centreX + 1, 0, centreZ));
+							writer.print(String.format("%d %d %d %d\n", groundID, centreX + 2, 0, centreZ));
+							writer.print(String.format("%d %d %d %d\n", groundID, centreX + 3, 0, centreZ));
+							writer.print(String.format("%d %d %d %d\n", groundID, centreX - 2, 1, centreZ));
+							writer.print(String.format("%d %d %d %d\n", groundID, centreX - 1, 1, centreZ));
+							writer.print(String.format("%d %d %d %d\n", groundID, centreX + 1, 1, centreZ));
+							writer.print(String.format("%d %d %d %d\n", groundID, centreX + 2, 1, centreZ));
+							writer.print(String.format("%d %d %d %d\n", groundID, centreX - 1, 2, centreZ));
+							writer.print(String.format("%d %d %d %d\n", groundID, centreX + 1, 2, centreZ));
+							writer.print(String.format("%d %d %d %d\n", groundID, centreX, 0, centreZ));
+							writer.print(String.format("%d %d %d %d\n", groundID, centreX, 1, centreZ));
+							writer.print(String.format("%d %d %d %d\n", groundID, centreX, 2, centreZ));
+							writer.print(String.format("%d %d %d %d\n", railID, centreX - 4, 0, centreZ));
+							writer.print(String.format("%d %d %d %d\n", railID, centreX - 3, 1, centreZ));
+							writer.print(String.format("%d %d %d %d\n", railID, centreX - 2, 2, centreZ));
+							writer.print(String.format("%d %d %d %d\n", railID, centreX - 1, 2, centreZ));
+							writer.print(String.format("%d %d %d %d\n", railID, centreX + 1, 2, centreZ));
+							writer.print(String.format("%d %d %d %d\n", railID, centreX + 2, 2, centreZ));
+							writer.print(String.format("%d %d %d %d\n", railID, centreX + 3, 1, centreZ));
+							writer.print(String.format("%d %d %d %d\n", railID, centreX + 4, 0, centreZ));
+							writer.print(String.format("%d %d %d %d\n", railID, centreX, 2, centreZ));
+							writer.print(String.format("%d %d %d %d\n", 0, centreX, 0, centreZ));
+							writer.print(String.format("%d %d %d %d\n", 0, centreX, 1, centreZ));
+							
+							// lower levels for z
+							writer.print(String.format("%d %d %d %d\n", 0, centreX, -1, centreZ - 1));
+							writer.print(String.format("%d %d %d %d\n", 0, centreX, -1, centreZ));
+							writer.print(String.format("%d %d %d %d\n", 0, centreX, -1, centreZ + 1));
+							writer.print(String.format("%d %d %d %d\n", railID, centreX, -1, centreZ - 2));
+							writer.print(String.format("%d %d %d %d\n", railID, centreX, -2, centreZ - 1));
+							writer.print(String.format("%d %d %d %d\n", railID, centreX, -2, centreZ + 1));
+							writer.print(String.format("%d %d %d %d\n", railID, centreX, -1, centreZ + 2));
+							writer.print(String.format("%d %d %d %d\n", railID, centreX, -2, centreZ));
+
+						}
+					}
+				}
+		
 	}
 
 

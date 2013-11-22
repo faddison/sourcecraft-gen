@@ -50,7 +50,7 @@ public class OldSimpleTemplate extends AbstractTemplate {
 		}
 			
 		(new CityFileGenerator()).generate(metricsList, cityFilename);
-		(new MapGenerator()).map(cityFilename, mapFilename);
+		//(new MapGenerator()).map(cityFilename, mapFilename);
 		
 	}
 }

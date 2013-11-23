@@ -14,7 +14,6 @@ public class CityEntity
 	}
 	
 	public CityEntity() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public ArrayList<BuildingEntity> getBuildingEntries() {

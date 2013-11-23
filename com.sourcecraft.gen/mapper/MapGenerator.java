@@ -12,9 +12,12 @@ import java.util.ArrayList;
 
 public class MapGenerator {
 
-	public void map(String inputfile, String outputfile) 
+	public void map(String inputfile1, String inputfile2, String outputfile) 
 	{
-		writeCity(readCity(inputfile), outputfile);	
+		ArrayList<Point> mapList = new ArrayList<Point>();
+		mapList.addAll(readCity(inputfile1));
+		mapList.addAll(readCity(inputfile2));
+		writeCity(mapList, outputfile);	
 	}
 	
 	private ArrayList<Point> readCity(String filename)
@@ -91,7 +94,6 @@ public class MapGenerator {
 			writer.close();
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

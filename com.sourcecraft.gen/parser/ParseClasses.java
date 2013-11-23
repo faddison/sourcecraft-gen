@@ -26,7 +26,7 @@ public class ParseClasses extends AbstractParser<SimpleClassMetrics> {
 			saxParser.parse(filename, handler);
 			classes = handler.getClassMetrics();
 			
-			//printMetrics();
+//			printMetrics();
 			
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();

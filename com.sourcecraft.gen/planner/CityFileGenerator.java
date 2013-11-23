@@ -21,16 +21,15 @@ public class CityFileGenerator
 		try 
 		{
 			writer = new PrintWriter(filename, "UTF-8");
-			//Parser p = new Parser();
-			//p.parse(classes);
-			//p.showData(classes);
+//			Parser p = new Parser();
+//			p.parse(classes);
+//			p.showData(classes);
 			generateGrid(classes, writer);
-			//generateBox(25, writer);
+//			generateBox(25, writer);
 			writer.close();
 			System.out.println(String.format("lines : %d", total_blocks));
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

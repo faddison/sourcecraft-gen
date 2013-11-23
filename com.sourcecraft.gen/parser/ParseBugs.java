@@ -25,7 +25,7 @@ public class ParseBugs extends AbstractParser<SimpleBugsMetrics> {
 			saxParser.parse(filename, handler);
 			bugs = handler.getBugs();
 			
-			//printBugs();
+//			printBugs();
 
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();

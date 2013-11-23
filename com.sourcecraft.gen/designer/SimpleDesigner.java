@@ -75,7 +75,6 @@ public class SimpleDesigner extends AbstractDesigner<SimpleClassMetrics>
 		buildingData.setHeight(height);
 		buildingData.setLength(dimension+1);
 		buildingData.setWidth(dimension+1);
-//		buildingData.setBugSeverity(c.getSeverity());
 
 			//make each block based on attributes, x starting at x going downwards and z going to the right
 		int count = 0;

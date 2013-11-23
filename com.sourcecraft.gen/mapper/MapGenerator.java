@@ -94,7 +94,6 @@ public class MapGenerator {
 			writer.close();
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

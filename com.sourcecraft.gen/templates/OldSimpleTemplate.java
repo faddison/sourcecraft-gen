@@ -22,6 +22,7 @@ public class OldSimpleTemplate extends AbstractTemplate {
 		designer = new SimpleDesigner();
 		planner = new ImprovedGridPlanner();
 		serializationWrapper = new SerializationWrapper<SimpleClassMetrics>();
+		// outdated parser
 //		parser = new ParseClassAndBugs();
 		
 		metricsFilename = "metrics/simpleclassmetrics-list.list";
@@ -45,12 +46,12 @@ public class OldSimpleTemplate extends AbstractTemplate {
 		}
 		else
 		{
-//			metricsList =  (ArrayList<SimpleClassMetrics>) parser.parse(sourceFilename);
 			serializationWrapper.serializer.serialize(metricsList, metricsFilename);
 		}
 			
 		(new CityFileGenerator()).generate(metricsList, cityFilename);
-		//(new MapGenerator()).map(cityFilename, mapFilename);
+		// outdated generator due to addition of rails
+//		(new MapGenerator()).map(cityFilename, mapFilename);
 		
 	}
 }

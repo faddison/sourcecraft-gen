@@ -11,8 +11,6 @@ import parser.ParseClasses;
 
 public class SimpleClassAndBugs {
 	
-	//static ArrayList<SimpleBugsMetrics> onlyBugs = new ArrayList<SimpleBugsMetrics>();
-	
 	public SimpleClassAndBugs() {
 		super();
 	}

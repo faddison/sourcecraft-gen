@@ -2,8 +2,8 @@ package decorator;
 
 public class BugConstants {
 	
-	// These numbers can of course be changed
-	// 1 is supposed to less worse bug type, 6 is the worst
+	// These numbers can be changed if needed
+	// 6 is the worst bug type, 1 is the least
 	
 	public static final int STYLE = 1;
 	public static final int BAD_PRACTICE = 2;

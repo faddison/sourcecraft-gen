@@ -33,7 +33,6 @@ public class ImprovedGridPlanner extends AbstractPlanner
 			System.out.println(String.format("lines : %d", total_blocks));
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -47,14 +46,10 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		ArrayList<ArrayList<BuildingEntity>> buildingList = grid.generate(cityEntry);
 
 		int maxLength = Mathematician.ceil2ndPower(cityEntry.getCityData().getMaxLength());
-		// change needed: added cell padding: 1 for redstone torches, 1 for shared railways and 1 for redstone torches of adjacent building
 		int maxPower = Mathematician.ceilLog2(cityEntry.getCityData().getMaxLength());
 
 		this.cellLength = maxLength;
 		this.cellLocations = getCellLocations(maxLength, buildingList.size(), 1);
-
-		// TODO: check if rail needs to be built around here as well
-		// maybe should think about connceting the rails together between buildings to ensure proper pathways
 
 		ArrayList<Point> cellLocation = getCellLocations(maxLength, buildingList.size(), 3);
 
@@ -80,10 +75,10 @@ public class ImprovedGridPlanner extends AbstractPlanner
 			int xPadding = 0;
 			int zPadding = 0;
 
-			// cell offset might be wrong and number of building in grid is off by 1
-
 			// this loop alternates between incrementing i and j by checking if k is even
-			Collections.shuffle(list);
+			
+			// no longer shuffling buildings
+//			Collections.shuffle(list);
 			for (BuildingEntity building: list)
 			{
 				int xOffset = (xIndex * cellOffset);
@@ -103,8 +98,6 @@ public class ImprovedGridPlanner extends AbstractPlanner
 					System.out.println(String.format("Writing building %d",bcount));
 
 					placeBuildingBlocks(writer, building, x, 0, z);
-					// TODO: check if the x and/or z offset is larger or smaller than 0
-
 
 					if (building.getMetrics() != null) {
 
@@ -147,7 +140,6 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		for (BlockEntity blockEntity: building.getBlockEntries())
 		{
 			Point3D p = blockEntity.getPoint().translate(xOffset,  yOffset, zOffset);
-			//System.out.println(String.format("Placing block: %d, %d, %d", p.getX(), p.getY(), p.getZ()));
 			writer.print(String.format("%d %d %d %d\n", blockEntity.getBlockData().getId(), p.getX(), p.getY(), p.getZ()));	
 		}
 	}

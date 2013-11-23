@@ -60,7 +60,6 @@ public class SimpleBugsMetrics extends AbstractMetrics {
 	}
 
 	public int getSeverity() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	

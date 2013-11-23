@@ -24,7 +24,8 @@ public class BlockWriter
                                 System.out.println(String.format("%d %d %d %d %s", data.getId(), p.getX(), p.getY(), p.getZ(), className));
                         }
                                 Point3D p = blockEntity.getPoint().translate(xOffset, yOffset, zOffset);
-                                //placeBlock(writer, className, new BlockEntity(p, blockEntity.getBlockData()));        
+                                // no longer required due to addition of signs
+//                                placeBlock(writer, className, new BlockEntity(p, blockEntity.getBlockData()));        
                 }
         }
         

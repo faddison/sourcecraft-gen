@@ -50,29 +50,12 @@ public class NewSimpleTemplate extends AbstractTemplate<SimpleClassMetrics> {
 			ArrayList<SimpleClassMetrics> metricsList = new ArrayList<SimpleClassMetrics>();
 			metricsList =  parser.startParsing(sourceFilename, bugsFilename);
 
-			/* ***COME BACK TO THIS
-			 * having problems with the serializable stuff below
-			 * java.io.InvalidClassException: metrics.SimpleClassMetrics; local class incompatible: stream classdesc serialVersionUID = -4063490111111282074, local class serialVersionUID = -3790282589782583307
-			 */
-//			file = new File(metricsFilename);
-//			if (file.exists())
-//			{
-//				metricsList = serializationWrapper.deserializer.deserialize(metricsFilename);
-//			}
-//			else
-//			{
-//				metricsList =  (ArrayList<SimpleClassMetrics>) parser.startParsing(sourceFilename, bugsFilename);
-//				serializationWrapper.serializer.serialize(metricsList, metricsFilename);
-//			}
-				
-			//
-			//CityEntity cityEntity = designer.design(new ArrayList<SimpleClassMetrics>(metricsList.subList(100, 150)));
 			CityEntity cityEntity = designer.design(metricsList);
 			planner.plan(cityEntity, cityFilename);
-			//(new MapGenerator()).map(cityFilename, mapFilename);
+			// generator now outdated due to addition of rails
+//			(new MapGenerator()).map(cityFilename, mapFilename);
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

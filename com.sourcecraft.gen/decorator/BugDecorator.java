@@ -97,32 +97,32 @@ public class BugDecorator extends AbstractDecorator {
                         if (blockEntity.getPoint().getY() == y) {
                                 
                                 if (bugData.getBugType() == BugConstants.STYLE) {
-                                        BlockData newBlockData = new BlockData(BlockConstants.GOLD);
+                                        BlockData newBlockData = new BlockData(BlockConstants.SNOW);
                                         blockEntity.setBlockData(newBlockData);
                                         decoratedBlocks++;
                                 }
                                 else if (bugData.getBugType() == BugConstants.BAD_PRACTICE) {
-                                        BlockData newBlockData = new BlockData(BlockConstants.MUSHROOM);
-                                        blockEntity.setBlockData(newBlockData);
-                                        decoratedBlocks++;
-                                }
-                                else if (bugData.getBugType() == BugConstants.CORRECTNESS) {
                                         BlockData newBlockData = new BlockData(BlockConstants.DIAMOND);
                                         blockEntity.setBlockData(newBlockData);
                                         decoratedBlocks++;
                                 }
-                                else if (bugData.getBugType() == BugConstants.EXPERIMENTAL) {
-                                        BlockData newBlockData = new BlockData(BlockConstants.COAL);
-                                        blockEntity.setBlockData(newBlockData);
-                                        decoratedBlocks++;
-                                }
-                                else if (bugData.getBugType() == BugConstants.MALICIOUS_CODE) {
+                                else if (bugData.getBugType() == BugConstants.CORRECTNESS) {
                                         BlockData newBlockData = new BlockData(BlockConstants.EMERALD);
                                         blockEntity.setBlockData(newBlockData);
                                         decoratedBlocks++;
                                 }
+                                else if (bugData.getBugType() == BugConstants.EXPERIMENTAL) {
+                                        BlockData newBlockData = new BlockData(BlockConstants.GOLD);
+                                        blockEntity.setBlockData(newBlockData);
+                                        decoratedBlocks++;
+                                }
+                                else if (bugData.getBugType() == BugConstants.MALICIOUS_CODE) {
+                                        BlockData newBlockData = new BlockData(BlockConstants.MUSHROOM);
+                                        blockEntity.setBlockData(newBlockData);
+                                        decoratedBlocks++;
+                                }
                                 else if (bugData.getBugType() == BugConstants.PERFORMANCE) {
-                                        BlockData newBlockData = new BlockData(BlockConstants.SNOW);
+                                        BlockData newBlockData = new BlockData(BlockConstants.COAL);
                                         blockEntity.setBlockData(newBlockData);
                                         decoratedBlocks++;
                                 }

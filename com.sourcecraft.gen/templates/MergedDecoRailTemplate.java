@@ -55,6 +55,10 @@ public class MergedDecoRailTemplate extends AbstractTemplate<SimpleClassMetrics>
 			file = new File(mapFilename);
 			if (!file.exists())
 				file.createNewFile();
+			file = new File(railFilename);
+			if (!file.exists())
+				file.createNewFile();
+			
 
 			ArrayList<SimpleClassMetrics> metricsList = new ArrayList<SimpleClassMetrics>();
 			metricsList =  parser.startParsing(sourceFilename, bugsFilename);

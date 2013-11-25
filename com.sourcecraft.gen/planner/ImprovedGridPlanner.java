@@ -60,7 +60,7 @@ public class ImprovedGridPlanner extends AbstractPlanner
 		int ntotal = 1;
 		int btotal = 1;
 
-		Collections.shuffle(buildingList);
+//		Collections.shuffle(buildingList);
 		for (int cellIndex = 0; cellIndex < buildingList.size(); cellIndex++)
 		{
 			ncount = 0;

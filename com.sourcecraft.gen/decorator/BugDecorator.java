@@ -17,11 +17,6 @@ public class BugDecorator extends AbstractDecorator {
         // USED FOR DEBUGGING
         private int decoratedBlocks = 0;
         private int decoratedMethods = 0;
-        public static int methodsWithoutNames = 0;
-        
-        public static int bugReplaceWithWorse = 0;
-        public static int bugEquallyBad = 0;
-        public static int bugLessBad = 0;
 
         public BugDecorator() {
                 
@@ -44,7 +39,6 @@ public class BugDecorator extends AbstractDecorator {
                                 continue;
                         }
                         
-                        // Starts decorating methods from the bottom of the building
                         for (int i = 0; i < decorateList.size(); i++) {
                                 
                                 int decorateHeight = findNextDecorationHeight(buildingData.getHeight(), decorateList.size(), i);
@@ -52,14 +46,10 @@ public class BugDecorator extends AbstractDecorator {
                                 decoratedMethods++;
                         }
                 }
-                System.out.println("");
-                System.out.println("total decorated blocks: " + decoratedBlocks);
-                System.out.println("total decorated methods: " + decoratedMethods);
-                System.out.println("methods without names: " + methodsWithoutNames);
-
                 
                 return city;
         }
+        
         
         // Creates a list of methods to decorate in each BuildingData object
         // If the same method has several bugs, only the worst bug is added to the list
@@ -129,6 +119,9 @@ public class BugDecorator extends AbstractDecorator {
                         }
                 }
         }
+        
+        // Starts decorating from the middle of the building and outwards
+        
         private int findNextDecorationHeight (int height, int numberOfBugs, int currentBeingDecorated) {
                 
                 

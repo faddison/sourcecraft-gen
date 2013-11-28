@@ -62,7 +62,6 @@ public class BuildingData {
 	
 	private boolean shouldAddDecorateList(BugData bug) {
 		if (bug.getMethodName() == null) {
-			BugDecorator.methodsWithoutNames++;
 			return false;
 		}
 		if (this.decorateList.isEmpty()) {
@@ -74,16 +73,13 @@ public class BuildingData {
 		for (BugData b : this.decorateList) {
 			if (b.getMethodName().equals(bug.getMethodName())) {
 				if (b.getBugType() == bug.getBugType()) {
-					BugDecorator.bugEquallyBad++;
 					return false;
 				}
 				else if (b.getBugType() > bug.getBugType()) {
-					BugDecorator.bugLessBad++;
 					return false;
 				}
 				else {
 					this.decorateList.remove(b);
-					BugDecorator.bugReplaceWithWorse++;
 					return true;
 				}
 			}
